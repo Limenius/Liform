@@ -7,7 +7,7 @@ It is used by [LiformBundle](https://github.com/Limenius/LiformBundle) but can b
 
 It is very annoying to maintain backend forms that match forms in a client technology, such as JavaScript. It is also annoying to maintain a documentation of such forms. And error prone.
 
-LiformBundle generates a JSON schema representation, that serves as documentation and can be used to document, validate your data and, if you want, to generate forms using a generator.
+Liform generates a JSON schema representation, that serves as documentation and can be used to document, validate your data and, if you want, to generate forms using a generator.
 
 ## Installation
 
