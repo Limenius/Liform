@@ -1,7 +1,7 @@
 Liform
 ======
 
-Library to serialize Symfony Forms into [JSON schema](http://json-schema.org/). For use with [liform-react](https://github.com/Limenius/liform-react) or [json-editor](https://github.com/jdorn/json-editor), or any other form generator based in json-schema.
+Liform is a library for serializing Symfony Forms into [JSON schema](http://json-schema.org/). For use with [liform-react](https://github.com/Limenius/liform-react) or [json-editor](https://github.com/jdorn/json-editor), or any other form generator based in json-schema.
 
 It is used by [LiformBundle](https://github.com/Limenius/LiformBundle) but can be used stand-alone.
 
