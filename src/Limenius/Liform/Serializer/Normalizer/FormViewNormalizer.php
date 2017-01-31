@@ -8,6 +8,11 @@ use Symfony\Component\Translation\TranslatorInterface;
 
 use Limenius\LiformBundle\Liform\FormUtil;
 
+/**
+ * Class: FormViewNormalizer
+ *
+ * @see NormalizerInterface
+ */
 class FormViewNormalizer implements NormalizerInterface
 {
     /**
@@ -20,8 +25,10 @@ class FormViewNormalizer implements NormalizerInterface
             foreach ($object->children as $name => $child) {
                 $form[$name] = $this->normalize($child);
             }
+
             return $form;
         } else {
+
             return $object->vars['value'];
         }
     }

@@ -9,6 +9,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormTypeExtensionInterface;
 
+/**
+ * Class: AddLiformExtension
+ *
+ * @see AbstractTypeExtension
+ */
 class AddLiformExtension extends AbstractTypeExtension
 {
     /**

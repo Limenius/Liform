@@ -5,6 +5,10 @@ namespace Limenius\Liform;
 use Symfony\Component\Form\FormInterface;
 use Limenius\Liform\Transformer\CompoundTransformer;
 
+/**
+ * Class: Liform
+ *
+ */
 class Liform
 {
     private $resolver;
@@ -16,15 +20,27 @@ class Liform
         $this->resolver = $resolver;
     }
 
+    /**
+     * @param FormInterface $form
+     *
+     * @return array
+     */
     public function transform(FormInterface $form)
     {
         $transformerData = $this->resolver->resolve($form);
+
         return $transformerData['transformer']->transform($form, $this->extensions, $transformerData['format']);
     }
 
+    /**
+     * @param mixed $extension
+     *
+     * @return Liform
+     */
     public function addExtension($extension)
     {
         $this->extensions[] = $extension;
+
         return $this;
     }
 }

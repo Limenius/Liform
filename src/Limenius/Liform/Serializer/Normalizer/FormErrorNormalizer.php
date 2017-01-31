@@ -20,10 +20,15 @@ use Symfony\Component\Translation\TranslatorInterface;
 class FormErrorNormalizer implements NormalizerInterface
 {
     private $translator;
+
+    /**
+     * @param TranslatorInterface $translator
+     */
     public function __construct(TranslatorInterface $translator)
     {
         $this->translator = $translator;
     }
+
     /**
      * {@inheritdoc}
      */
@@ -35,6 +40,7 @@ class FormErrorNormalizer implements NormalizerInterface
             'errors' => $this->convertFormToArray($object),
         ];
     }
+
     /**
      * {@inheritdoc}
      */
@@ -42,6 +48,7 @@ class FormErrorNormalizer implements NormalizerInterface
     {
         return $data instanceof FormInterface && $data->isSubmitted() && !$data->isValid();
     }
+
     /**
      * This code has been taken from JMSSerializer.
      */
@@ -63,6 +70,7 @@ class FormErrorNormalizer implements NormalizerInterface
         if ($children) {
             $form['children'] = $children;
         }
+
         return $form;
     }
     private function getErrorMessage(FormError $error)
@@ -70,6 +78,7 @@ class FormErrorNormalizer implements NormalizerInterface
         if (null !== $error->getMessagePluralization()) {
             return $this->translator->transChoice($error->getMessageTemplate(), $error->getMessagePluralization(), $error->getMessageParameters(), 'validators');
         }
+
         return $this->translator->trans($error->getMessageTemplate(), $error->getMessageParameters(), 'validators');
     }
 }

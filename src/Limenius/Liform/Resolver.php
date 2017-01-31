@@ -4,13 +4,23 @@ namespace Limenius\Liform;
 
 use Symfony\Component\Form\FormInterface;
 use Limenius\Liform\Transformer;
+use Limenius\Liform\Transformer\AbstractTransformer;
 use Limenius\Liform\Exception\TransformerException;
 
+/**
+ * Class: Resolver
+ *
+ */
 class Resolver
 {
     private $transformers = [];
 
-    public function setTransformer($formType, $transformer, $format = null)
+    /**
+     * @param mixed $formType
+     * @param mixed $transformer
+     * @param mixed $format
+     */
+    public function setTransformer($formType, AbstractTransformer $transformer, $format = null)
     {
         $this->transformers[$formType] = [
             'transformer' => $transformer,
@@ -18,6 +28,11 @@ class Resolver
             ];
     }
 
+    /**
+     * @param FormInterface $form
+     *
+     * @return array
+     */
     public function resolve(FormInterface $form)
     {
         $types = FormUtil::typeAncestry($form);
@@ -76,5 +91,4 @@ class Resolver
         $this->setTransformer('percent', $stringTransformer, 'percent');
         $this->setTransformer('email', $stringTransformer, 'email');
     }
-
 }
