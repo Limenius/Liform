@@ -10,7 +10,12 @@
         }
     ],
     "autoload": {
-        "psr-4": { "Limenius\\Liform\\": "src" }
+        "psr-4": { "Limenius\\Liform\\": "src/Limenius/Liform" }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Limemius\\Liform\\Tests\\": "tests/Limenius/Liform/Tests"
+        }
     },
     "require": {
         "symfony/form": "~2.3|~3.0"
