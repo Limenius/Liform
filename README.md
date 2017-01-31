@@ -9,6 +9,11 @@ It is very annoying to maintain backend forms that match forms in a client techn
 
 Liform generates a JSON schema representation, that serves as documentation and can be used to document, validate your data and, if you want, to generate forms using a generator.
 
+[![Build Status](https://travis-ci.org/Limenius/Liform.svg?branch=master)](https://travis-ci.org/Limenius/Liform)
+[![Latest Stable Version](https://poser.pugx.org/limenius/liform/v/stable)](https://packagist.org/packages/limenius/liform)
+[![Latest Unstable Version](https://poser.pugx.org/limenius/liform/v/unstable)](https://packagist.org/packages/limenius/liform)
+[![License](https://poser.pugx.org/limenius/liform/license)](https://packagist.org/packages/limenius/liform)
+
 ## Installation
 
 Open a command console, enter your project directory and execute the
