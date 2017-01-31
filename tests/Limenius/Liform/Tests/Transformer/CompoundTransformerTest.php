@@ -14,9 +14,18 @@ use Limenius\Liform\Transformer\CompoundTransformer;
 use Limenius\Liform\Transformer\StringTransformer;
 use Limenius\Liform\Resolver;
 
+/**
+ * Class: CompoundTransformerTest
+ *
+ * @see TypeTestCase
+ */
 class CompoundTransformerTest extends TypeTestCase
 {
 
+    /**
+     * testOrder
+     *
+     */
     public function testOrder()
     {
         $form = $this->factory->create(FormType::class)

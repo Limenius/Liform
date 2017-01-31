@@ -15,6 +15,9 @@ class Liform
 
     private $extensions = [];
 
+    /**
+     * @param Resolver $resolver
+     */
     public function __construct(Resolver $resolver)
     {
         $this->resolver = $resolver;

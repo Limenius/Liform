@@ -1,10 +1,25 @@
 <?php
 
 namespace Limenius\Liform\Transformer;
+
 use Symfony\Component\Form\FormInterface;
 
+/**
+ * Class: StringTransformer
+ *
+ * @see AbstractTransformer
+ */
 class StringTransformer extends AbstractTransformer
 {
+    /**
+     * transform
+     *
+     * @param FormInterface $form
+     * @param mixed         $extensions
+     * @param mixed         $format
+     *
+     * @return array
+     */
     public function transform(FormInterface $form, $extensions = [], $format = null)
     {
         $schema = [
@@ -22,5 +37,4 @@ class StringTransformer extends AbstractTransformer
 
         return $schema;
     }
-
 }

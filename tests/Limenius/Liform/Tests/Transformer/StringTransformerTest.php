@@ -17,6 +17,11 @@ use Limenius\Liform\Transformer\CompoundTransformer;
 use Limenius\Liform\Transformer\StringTransformer;
 use Limenius\Liform\Resolver;
 
+/**
+ * Class: StringTransformerTest
+ *
+ * @see TypeTestCase
+ */
 class StringTransformerTest extends TypeTestCase
 {
     //protected function getExtensions()
@@ -27,6 +32,10 @@ class StringTransformerTest extends TypeTestCase
     //    ));
     //}
 
+    /**
+     * testPattern
+     *
+     */
     public function testPattern()
     {
         $form = $this->factory->create(FormType::class)
@@ -43,6 +52,10 @@ class StringTransformerTest extends TypeTestCase
         $this->assertEquals('.{5,}', $transformed['properties']['firstName']['pattern']);
     }
 
+    /**
+     * testRequired
+     *
+     */
     public function testRequired()
     {
         $form = $this->factory->create(FormType::class)

@@ -28,7 +28,6 @@ class FormViewNormalizer implements NormalizerInterface
 
             return $form;
         } else {
-
             return $object->vars['value'];
         }
     }

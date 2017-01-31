@@ -12,9 +12,11 @@ use Symfony\Component\Form\FormInterface;
 abstract class AbstractTransformer
 {
     /**
+     * transform
+     *
      * @param FormInterface $form
-     * @param array $extensions
-     * @param string $format
+     * @param mixed         $extensions
+     * @param mixed         $format
      *
      * @return array
      */
@@ -33,6 +35,7 @@ abstract class AbstractTransformer
         foreach ($extensions as $extension) {
             $newSchema = $extension->apply($form, $newSchema);
         }
+
         return $newSchema;
     }
 
@@ -53,6 +56,7 @@ abstract class AbstractTransformer
         $schema = $this->addDescription($form, $schema);
         $schema = $this->addFormat($form, $schema, $format);
         $schema = $this->applyExtensions($extensions, $form, $schema);
+
         return $schema;
     }
 
@@ -70,6 +74,7 @@ abstract class AbstractTransformer
                 $schema['default'] = $attr['placeholder'];
             }
         }
+
         return $schema;
     }
 
@@ -86,6 +91,7 @@ abstract class AbstractTransformer
                 $schema['pattern'] = $attr['pattern'];
             }
         }
+
         return $schema;
     }
 
@@ -102,6 +108,7 @@ abstract class AbstractTransformer
         } else {
             $schema['title'] = $form->getName();
         }
+
         return $schema;
     }
 
@@ -111,10 +118,12 @@ abstract class AbstractTransformer
      *
      * @return array
      */
-    protected function addAttr($form, $schema) {
+    protected function addAttr($form, $schema)
+    {
         if ($attr = $form->getConfig()->getOption('attr')) {
             $schema['attr'] = $attr;
         }
+
         return $schema;
     }
 
@@ -124,12 +133,14 @@ abstract class AbstractTransformer
      *
      * @return array
      */
-    protected function addDescription($form, $schema) {
+    protected function addDescription($form, $schema)
+    {
         if ($liform = $form->getConfig()->getOption('liform')) {
             if (isset($liform['description']) && $description = $liform['description']) {
                 $schema['description'] = $description;
             }
         }
+
         return $schema;
     }
 
@@ -140,7 +151,8 @@ abstract class AbstractTransformer
      *
      * @return array
      */
-    protected function addFormat($form, $schema, $configFormat) {
+    protected function addFormat($form, $schema, $configFormat)
+    {
         if ($liform = $form->getConfig()->getOption('liform')) {
             if (isset($liform['format']) && $format = $liform['format']) {
                 $schema['format'] = $format;
@@ -148,6 +160,7 @@ abstract class AbstractTransformer
         } elseif ($configFormat) {
             $schema['format'] = $configFormat;
         }
+
         return $schema;
     }
 
