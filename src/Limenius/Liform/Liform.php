@@ -15,9 +15,6 @@ class Liform
 
     private $extensions = [];
 
-    /**
-     * @param Resolver $resolver
-     */
     public function __construct(Resolver $resolver)
     {
         $this->resolver = $resolver;
@@ -32,7 +29,7 @@ class Liform
     {
         $transformerData = $this->resolver->resolve($form);
 
-        return $transformerData['transformer']->transform($form, $this->extensions, $transformerData['format']);
+        return $transformerData['transformer']->transform($form, $this->extensions, $transformerData['widget']);
     }
 
     /**

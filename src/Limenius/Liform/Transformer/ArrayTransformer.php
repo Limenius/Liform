@@ -4,41 +4,20 @@ namespace Limenius\Liform\Transformer;
 
 use Symfony\Component\Form\FormInterface;
 use Limenius\Liform\Exception\TransformerException;
-use Limenius\Liform\Resolver;
 
-/**
- * Class: ArrayTransformer
- *
- * @see AbstractTransformer
- */
 class ArrayTransformer extends AbstractTransformer
 {
-    /**
-     * __construct
-     *
-     * @param mixed $resolver
-     */
-    public function __construct(Resolver $resolver)
-    {
+    public function __construct($resolver) {
         $this->resolver = $resolver;
     }
 
-    /**
-     * transform
-     *
-     * @param FormInterface $form
-     * @param mixed         $extensions
-     * @param mixed         $format
-     *
-     * @return array
-     */
-    public function transform(FormInterface $form, $extensions = [], $format = null)
+    public function transform(FormInterface $form, $extensions = [], $widget = null)
     {
         $children = [];
 
         foreach ($form->all() as $name => $field) {
             $transformerData = $this->resolver->resolve($field);
-            $transformedChild = $transformerData['transformer']->transform($field, $extensions, $transformerData['format']);
+            $transformedChild = $transformerData['transformer']->transform($field, $extensions, $transformerData['widget']);
             $children[] = $transformedChild;
 
             if ($transformerData['transformer']->isRequired($field)) {
@@ -49,20 +28,20 @@ class ArrayTransformer extends AbstractTransformer
         if (empty($children)) {
             $entryType = $form->getConfig()->getAttribute('prototype');
             if (!$entryType) {
-                throw new TransformerException('Liform cannot infer the json-schema representation of a an empty Collection or array-like type without the option "allow_add" (to check the proptotype). Evaluating "'.$form->getName().'"');
+                throw new TransformerException( 'Liform cannot infer the json-schema representation of a an empty Collection or array-like type without the option "allow_add" (to check the proptotype). Evaluating "'.$form->getName().'"');
             }
             $transformerData = $this->resolver->resolve($entryType);
-            $children[] = $transformerData['transformer']->transform($entryType, $extensions, $transformerData['format']);
+            $children[] = $transformerData['transformer']->transform($entryType, $extensions, $transformerData['widget']);
             $children[0]['title'] = 'prototype';
         }
 
-        $schema = [
+        $schema =[
             'type' => 'array',
             'title' => $form->getConfig()->getOption('label'),
-            'items' => $children[0],
+            'items' => $children[0]
         ];
 
-        $schema = $this->addCommonSpecs($form, $schema, $extensions, $format);
+        $schema = $this->addCommonSpecs($form, $schema, $extensions, $widget);
 
         return $schema;
     }

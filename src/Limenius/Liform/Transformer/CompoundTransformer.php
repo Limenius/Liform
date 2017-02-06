@@ -1,45 +1,23 @@
 <?php
 
 namespace Limenius\Liform\Transformer;
-
 use Symfony\Component\Form\FormInterface;
 use Limenius\Liform\FormUtil;
-use Limenius\Liform\Resolver;
 
-/**
- * Class: CompoundTransformer
- *
- * @see AbstractTransformer
- */
 class CompoundTransformer extends AbstractTransformer
 {
-    /**
-     * __construct
-     *
-     * @param Resolver $resolver
-     */
-    public function __construct(Resolver $resolver)
-    {
+    public function __construct($resolver) {
         $this->resolver = $resolver;
     }
 
-    /**
-     * transform
-     *
-     * @param FormInterface $form
-     * @param mixed         $extensions
-     * @param mixed         $format
-     *
-     * @return array
-     */
-    public function transform(FormInterface $form, $extensions = [], $format = null)
+    public function transform(FormInterface $form, $extensions = [], $widget = null)
     {
         $data = [];
         $order = 1;
         $required = [];
         foreach ($form->all() as $name => $field) {
             $transformerData = $this->resolver->resolve($field);
-            $transformedChild = $transformerData['transformer']->transform($field, $extensions, $transformerData['format']);
+            $transformedChild = $transformerData['transformer']->transform($field, $extensions, $transformerData['widget']);
             $transformedChild['propertyOrder'] = $order;
             $data[$name] = $transformedChild;
             $order ++;
@@ -48,10 +26,10 @@ class CompoundTransformer extends AbstractTransformer
                 $required[] = $field->getName();
             }
         }
-        $schema = [
+        $schema =[
             'title' => $form->getConfig()->getOption('label'),
             'type' => 'object',
-            'properties' => $data,
+            'properties' => $data
         ];
 
         if (!empty($required)) {
@@ -59,10 +37,10 @@ class CompoundTransformer extends AbstractTransformer
         }
         $innerType = $form->getConfig()->getType()->getInnerType();
 
-        if (method_exists($innerType, 'buildLiform')) {
+        if(method_exists($innerType,'buildLiform')) {
             $schema['liform'] = $innerType->buildLiform($form);
         }
-        $schema = $this->addCommonSpecs($form, $schema, $extensions, $format);
+        $schema = $this->addCommonSpecs($form, $schema, $extensions, $widget);
 
         return $schema;
     }

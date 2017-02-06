@@ -12,15 +12,13 @@ use Symfony\Component\Form\FormInterface;
 abstract class AbstractTransformer
 {
     /**
-     * transform
-     *
      * @param FormInterface $form
-     * @param mixed         $extensions
-     * @param mixed         $format
+     * @param array $extensions
+     * @param string $widget
      *
      * @return array
      */
-    abstract public function transform(FormInterface $form, $extensions = [], $format = null);
+    abstract public function transform(FormInterface $form, $extensions = [], $widget = null);
 
     /**
      * @param array $extensions
@@ -35,7 +33,6 @@ abstract class AbstractTransformer
         foreach ($extensions as $extension) {
             $newSchema = $extension->apply($form, $newSchema);
         }
-
         return $newSchema;
     }
 
@@ -43,20 +40,19 @@ abstract class AbstractTransformer
      * @param mixed $form
      * @param array $schema
      * @param array $extensions
-     * @param string $format
+     * @param string $widget
      *
      * @return array
      */
-    protected function addCommonSpecs($form, $schema, $extensions = [], $format)
+    protected function addCommonSpecs($form, $schema, $extensions = [], $widget)
     {
         $schema = $this->addLabel($form, $schema);
         $schema = $this->addAttr($form, $schema);
         $schema = $this->addPattern($form, $schema);
         $schema = $this->addDefault($form, $schema);
         $schema = $this->addDescription($form, $schema);
-        $schema = $this->addFormat($form, $schema, $format);
+        $schema = $this->addWidget($form, $schema, $widget);
         $schema = $this->applyExtensions($extensions, $form, $schema);
-
         return $schema;
     }
 
@@ -74,7 +70,6 @@ abstract class AbstractTransformer
                 $schema['default'] = $attr['placeholder'];
             }
         }
-
         return $schema;
     }
 
@@ -91,7 +86,6 @@ abstract class AbstractTransformer
                 $schema['pattern'] = $attr['pattern'];
             }
         }
-
         return $schema;
     }
 
@@ -108,7 +102,6 @@ abstract class AbstractTransformer
         } else {
             $schema['title'] = $form->getName();
         }
-
         return $schema;
     }
 
@@ -118,12 +111,10 @@ abstract class AbstractTransformer
      *
      * @return array
      */
-    protected function addAttr($form, $schema)
-    {
+    protected function addAttr($form, $schema) {
         if ($attr = $form->getConfig()->getOption('attr')) {
             $schema['attr'] = $attr;
         }
-
         return $schema;
     }
 
@@ -133,34 +124,30 @@ abstract class AbstractTransformer
      *
      * @return array
      */
-    protected function addDescription($form, $schema)
-    {
+    protected function addDescription($form, $schema) {
         if ($liform = $form->getConfig()->getOption('liform')) {
             if (isset($liform['description']) && $description = $liform['description']) {
                 $schema['description'] = $description;
             }
         }
-
         return $schema;
     }
 
     /**
      * @param mixed $form
      * @param array $schema
-     * @param mixed $configFormat
+     * @param mixed $configWidget
      *
      * @return array
      */
-    protected function addFormat($form, $schema, $configFormat)
-    {
+    protected function addWidget($form, $schema, $configWidget) {
         if ($liform = $form->getConfig()->getOption('liform')) {
-            if (isset($liform['format']) && $format = $liform['format']) {
-                $schema['format'] = $format;
+            if (isset($liform['widget']) && $widget = $liform['widget']) {
+                $schema['widget'] = $widget;
             }
-        } elseif ($configFormat) {
-            $schema['format'] = $configFormat;
+        } elseif ($configWidget) {
+            $schema['widget'] = $configWidget;
         }
-
         return $schema;
     }
 

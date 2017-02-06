@@ -1,27 +1,12 @@
 <?php
 
 namespace Limenius\Liform\Transformer;
-
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\ChoiceList\View\ChoiceGroupView;
 
-/**
- * Class: ChoiceTransformer
- *
- * @see AbstractTransformer
- */
 class ChoiceTransformer extends AbstractTransformer
 {
-    /**
-     * transform
-     *
-     * @param FormInterface $form
-     * @param mixed         $extensions
-     * @param mixed         $format
-     *
-     * @return array
-     */
-    public function transform(FormInterface $form, $extensions = [], $format = null)
+    public function transform(FormInterface $form, $extensions = [], $widget = null)
     {
         $formView = $form->createView();
 
@@ -47,17 +32,17 @@ class ChoiceTransformer extends AbstractTransformer
                     'minItems' => $this->isRequired($form) ? 1 : 0,
                 ],
                 'uniqueItems' => true,
-                'type' => 'array',
+                'type' => 'array'
             ];
         } else {
             $schema = [
                 'enum' => $choices,
                 'liform' => ['enum_titles' => $titles],
-                'type' => 'string',
+                'type' => 'string'
             ];
         }
 
-        $schema = $this->addCommonSpecs($form, $schema, $extensions, $format);
+        $schema = $this->addCommonSpecs($form, $schema, $extensions, $widget);
 
         return $schema;
     }

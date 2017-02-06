@@ -18,13 +18,13 @@ class Resolver
     /**
      * @param mixed $formType
      * @param mixed $transformer
-     * @param mixed $format
+     * @param mixed $widget
      */
-    public function setTransformer($formType, AbstractTransformer $transformer, $format = null)
+    public function setTransformer($formType, AbstractTransformer $transformer, $widget = null)
     {
         $this->transformers[$formType] = [
             'transformer' => $transformer,
-            'format' => $format,
+            'widget' => $widget,
             ];
     }
 
@@ -47,7 +47,7 @@ class Resolver
         if (FormUtil::isCompound($form)) {
             return [
                 'transformer' => new Transformer\CompoundTransformer($this),
-                'format' => null,
+                'widget' => null,
             ];
         }
 
