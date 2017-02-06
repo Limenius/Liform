@@ -3,13 +3,17 @@
 namespace Limenius\Liform\Tests;
 
 use Limenius\Liform\Resolver;
+use Limenius\Liform\Exception\TransformerException;
+use Symfony\Component\Form\Test\TypeTestCase;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
 
 /**
  * Class: ResolverTest
  *
- * @see \PHPUnit_Framework_TestCase
+ * @see TypeTestCase
  */
-class ResolverTest extends \PHPUnit_Framework_TestCase
+class ResolverTest extends TypeTestCase
 {
     /**
      * testConstruct
@@ -19,5 +23,21 @@ class ResolverTest extends \PHPUnit_Framework_TestCase
     {
         $resolver = new Resolver();
         $this->assertInstanceOf(Resolver::class, $resolver);
+    }
+
+    public function testCannotResolve()
+    {
+        $this->expectException(TransformerException::class);
+        $resolver = new Resolver();
+        $form = $this->factory->create(TextType::class);
+        $this->assertArrayHasKey('transformer', $resolver->resolve($form));
+    }
+
+    public function testResolve()
+    {
+        $resolver = new Resolver();
+        $resolver->setDefaultTransformers();
+        $form = $this->factory->create(TextType::class);
+        $this->assertArrayHasKey('transformer', $resolver->resolve($form));
     }
 }
