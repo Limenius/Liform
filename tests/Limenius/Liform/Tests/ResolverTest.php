@@ -28,10 +28,10 @@ class ResolverTest extends TypeTestCase
     /**
      * testCannotResolve
      *
+     * @expectedException \Limenius\Liform\Exception\TransformerException
      */
     public function testCannotResolve()
     {
-        $this->expectException(TransformerException::class);
         $resolver = new Resolver();
         $form = $this->factory->create(TextType::class);
         $this->assertArrayHasKey('transformer', $resolver->resolve($form));
@@ -39,7 +39,6 @@ class ResolverTest extends TypeTestCase
 
     /**
      * testResolve
-     *
      */
     public function testResolve()
     {
