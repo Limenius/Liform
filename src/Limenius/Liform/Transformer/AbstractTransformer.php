@@ -13,8 +13,8 @@ abstract class AbstractTransformer
 {
     /**
      * @param FormInterface $form
-     * @param array $extensions
-     * @param string $widget
+     * @param array         $extensions
+     * @param string        $widget
      *
      * @return array
      */
@@ -33,6 +33,7 @@ abstract class AbstractTransformer
         foreach ($extensions as $extension) {
             $newSchema = $extension->apply($form, $newSchema);
         }
+
         return $newSchema;
     }
 
@@ -53,6 +54,7 @@ abstract class AbstractTransformer
         $schema = $this->addDescription($form, $schema);
         $schema = $this->addWidget($form, $schema, $widget);
         $schema = $this->applyExtensions($extensions, $form, $schema);
+
         return $schema;
     }
 
@@ -70,6 +72,7 @@ abstract class AbstractTransformer
                 $schema['default'] = $attr['placeholder'];
             }
         }
+
         return $schema;
     }
 
@@ -86,6 +89,7 @@ abstract class AbstractTransformer
                 $schema['pattern'] = $attr['pattern'];
             }
         }
+
         return $schema;
     }
 
@@ -102,6 +106,7 @@ abstract class AbstractTransformer
         } else {
             $schema['title'] = $form->getName();
         }
+
         return $schema;
     }
 
@@ -111,10 +116,12 @@ abstract class AbstractTransformer
      *
      * @return array
      */
-    protected function addAttr($form, $schema) {
+    protected function addAttr($form, $schema)
+    {
         if ($attr = $form->getConfig()->getOption('attr')) {
             $schema['attr'] = $attr;
         }
+
         return $schema;
     }
 
@@ -124,12 +131,14 @@ abstract class AbstractTransformer
      *
      * @return array
      */
-    protected function addDescription($form, $schema) {
+    protected function addDescription($form, $schema)
+    {
         if ($liform = $form->getConfig()->getOption('liform')) {
             if (isset($liform['description']) && $description = $liform['description']) {
                 $schema['description'] = $description;
             }
         }
+
         return $schema;
     }
 
@@ -140,7 +149,8 @@ abstract class AbstractTransformer
      *
      * @return array
      */
-    protected function addWidget($form, $schema, $configWidget) {
+    protected function addWidget($form, $schema, $configWidget)
+    {
         if ($liform = $form->getConfig()->getOption('liform')) {
             if (isset($liform['widget']) && $widget = $liform['widget']) {
                 $schema['widget'] = $widget;
@@ -148,6 +158,7 @@ abstract class AbstractTransformer
         } elseif ($configWidget) {
             $schema['widget'] = $configWidget;
         }
+
         return $schema;
     }
 

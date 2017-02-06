@@ -1,15 +1,36 @@
 <?php
 
 namespace Limenius\Liform\Transformer;
+
 use Symfony\Component\Form\FormInterface;
 use Limenius\Liform\FormUtil;
 
+/**
+ * Class: CompoundTransformer
+ *
+ * @see AbstractTransformer
+ */
 class CompoundTransformer extends AbstractTransformer
 {
-    public function __construct($resolver) {
+    /**
+     * __construct
+     *
+     * @param mixed $resolver
+     */
+    public function __construct($resolver)
+    {
         $this->resolver = $resolver;
     }
 
+    /**
+     * transform
+     *
+     * @param FormInterface $form
+     * @param array         $extensions
+     * @param srting|null   $widget
+     *
+     * @return array
+     */
     public function transform(FormInterface $form, $extensions = [], $widget = null)
     {
         $data = [];
@@ -26,10 +47,10 @@ class CompoundTransformer extends AbstractTransformer
                 $required[] = $field->getName();
             }
         }
-        $schema =[
+        $schema = [
             'title' => $form->getConfig()->getOption('label'),
             'type' => 'object',
-            'properties' => $data
+            'properties' => $data,
         ];
 
         if (!empty($required)) {
@@ -37,7 +58,7 @@ class CompoundTransformer extends AbstractTransformer
         }
         $innerType = $form->getConfig()->getType()->getInnerType();
 
-        if(method_exists($innerType,'buildLiform')) {
+        if (method_exists($innerType, 'buildLiform')) {
             $schema['liform'] = $innerType->buildLiform($form);
         }
         $schema = $this->addCommonSpecs($form, $schema, $extensions, $widget);
