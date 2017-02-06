@@ -25,6 +25,10 @@ class ResolverTest extends TypeTestCase
         $this->assertInstanceOf(Resolver::class, $resolver);
     }
 
+    /**
+     * testCannotResolve
+     *
+     */
     public function testCannotResolve()
     {
         $this->expectException(TransformerException::class);
@@ -33,6 +37,10 @@ class ResolverTest extends TypeTestCase
         $this->assertArrayHasKey('transformer', $resolver->resolve($form));
     }
 
+    /**
+     * testResolve
+     *
+     */
     public function testResolve()
     {
         $resolver = new Resolver();
