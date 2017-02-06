@@ -90,5 +90,8 @@ class Resolver
         $this->setTransformer('time', $stringTransformer);
         $this->setTransformer('percent', $stringTransformer, 'percent');
         $this->setTransformer('email', $stringTransformer, 'email');
+        $this->setTransformer('date', $stringTransformer, 'date');
+        $this->setTransformer('datetime', $stringTransformer, 'datetime');
+        $this->setTransformer('time', $stringTransformer, 'time');
     }
 }
