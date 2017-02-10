@@ -150,7 +150,7 @@ $initialValues = $serializer->normalize($form),
 
 To obtain an array with the errors of your form. [liform-react](https://github.com/Limenius/liform-react), if you are using it, can understand this format.
 
-## Data extracted to JSON-schema
+## Information extracted to JSON-schema
 
 The goal of Liform is to extract as much data as possible from the form in order to have a complete representation with validation and UI hints in the schema. The options currently supported are.
 
