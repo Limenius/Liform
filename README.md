@@ -32,8 +32,15 @@ in the *installation chapter* of the Composer documentation.
 Serializing a form into JSON Schema:
 
 ```php
-        $form = $this->createForm(CarType::class, $car, ['csrf_protection' => false]);
-        $schema = json_encode($liform->transform($form));
+use Limenius\Liform\Resolver;
+use Limenius\Liform\Liform;
+
+$resolver = new Resolver();
+$resolver->setDefaultTransformers();
+$liform = new Liform($resolver);
+
+$form = $this->createForm(CarType::class, $car, ['csrf_protection' => false]);
+$schema = json_encode($liform->transform($form));
 ```
 
 And `$schema` will contain a JSON Schema representation such as:
@@ -86,8 +93,63 @@ And `$schema` will contain a JSON Schema representation such as:
       "drivers"
    ]
 }
-
 ```
+
+## Using your own transformers
+
+Liform works by inspecting recursively the form, finding (resolving) the right transformer for every child and using that transformer to build the corresponding slice of the json-schema. So, if you want to modify the way a particular form type is transformed, you should set a transformer that matches a type with that `block_prefix`.
+
+To do so, you can use the `setTransformer` method of `Resolver`. In this case we are reusing the StringTransformer, just making it set the widget property to my_widget, but you could use your very own transformer:
+
+```php
+
+use Limenius\Liform\Resolver;
+use Limenius\Liform\Liform;
+use Limenius\Liform\Transformer;
+
+$stringTransformer = new Transformer\StringTransformer();
+
+$resolver = new Resolver();
+$resolver->setDefaultTransformers();
+$resolver->setTransformer('my_block_prefix', $stringTransformer, 'my_widget');
+$resolver->setTransformer();
+$liform = new Liform($resolver);
+```
+
+## Serializing initial values
+
+This library provides a normalizer to serialize a `FormView` (you can create one with `$form->createView()`) into an array of initial values. 
+
+```php
+use Limenius\Liform\Serializer\Normalizer\FormViewNormalizer;
+
+$encoders = array(new XmlEncoder(), new JsonEncoder());
+$normalizers = array(new FormViewNormalizer());
+
+$serializer = new Serializer($normalizers, $encoders);
+$initialValues = $serializer->normalize($form->createView()),
+```
+
+To obtain an array of initial values that match your json-schema.
+
+
+## Serializing errors
+
+
+This library provides a normalizer to serialize forms with errors into an array. This part was shameless taken from [FOSRestBundle](https://github.com/FriendsOfSymfony/FOSRestBundle/blob/master/Serializer/Normalizer/FormErrorNormalizer.php). Just do in your action:
+
+```php
+use Limenius\Liform\Serializer\Normalizer\FormErrorNormalizer;
+
+$encoders = array(new XmlEncoder(), new JsonEncoder());
+$normalizers = array(new FormErrorNormalizer());
+
+$serializer = new Serializer($normalizers, $encoders);
+$initialValues = $serializer->normalize($form),
+```
+
+To obtain an array with the errors of your form. [liform-react](https://github.com/Limenius/liform-react), if you are using it, can understand this format.
+
 
 ## License
 
