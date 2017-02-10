@@ -21,9 +21,15 @@ class FormViewNormalizer implements NormalizerInterface
     public function normalize($object, $format = null, array $context = [])
     {
         if (!empty($object->children)) {
-            $form = [];
+            // Force serialization as {} instead of []
+            $form = (object) array();
             foreach ($object->children as $name => $child) {
-                $form[$name] = $this->normalize($child);
+                // Skip empty values because 
+                // https://github.com/erikras/redux-form/issues/2149
+                if (empty($child->children) && ($child->vars['value'] === null || $child->vars['value'] === '')) {
+                    continue;
+                }
+                $form->{$name} = $this->normalize($child);
             }
 
             return $form;
