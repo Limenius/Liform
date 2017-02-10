@@ -24,7 +24,7 @@ class FormViewNormalizer implements NormalizerInterface
             // Force serialization as {} instead of []
             $form = (object) array();
             foreach ($object->children as $name => $child) {
-                // Skip empty values because 
+                // Skip empty values because
                 // https://github.com/erikras/redux-form/issues/2149
                 if (empty($child->children) && ($child->vars['value'] === null || $child->vars['value'] === '')) {
                     continue;
