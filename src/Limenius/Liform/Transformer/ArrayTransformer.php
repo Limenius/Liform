@@ -48,7 +48,7 @@ class ArrayTransformer extends AbstractTransformer
         if (empty($children)) {
             $entryType = $form->getConfig()->getAttribute('prototype');
             if (!$entryType) {
-                throw new TransformerException('Liform cannot infer the json-schema representation of a an empty Collection or array-like type without the option "allow_add" (to check the proptotype). Evaluating "'.$form->getName().'"');
+                throw new TransformerException('Liform cannot infer the json-schema representation of a an empty Collection or array-like type without the option "allow_add" (to check the prototype). Evaluating "'.$form->getName().'"');
             }
             $transformerData = $this->resolver->resolve($entryType);
             $children[] = $transformerData['transformer']->transform($entryType, $extensions, $transformerData['widget']);
