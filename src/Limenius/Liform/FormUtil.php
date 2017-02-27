@@ -42,6 +42,25 @@ class FormUtil
     }
 
     /**
+     * Returns the dataClass of the form or its parents, if any
+     *
+     * @param mixed $formType
+     * @return string|null the dataClass
+     */
+    public static function findDataClass($formType)
+    {
+        if ($dataClass = $formType->getConfig()->getDataClass()) {
+            return $dataClass;
+        } else {
+            if ($parent = $formType->getParent()) {
+                return self::findDataClass($parent);
+            } else {
+                return null;
+            }
+        }
+    }
+
+    /**
      * @param FormInterface $form
      * @param mixed         $type
      *
