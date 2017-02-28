@@ -112,7 +112,6 @@ $stringTransformer = new Transformer\StringTransformer();
 $resolver = new Resolver();
 $resolver->setDefaultTransformers();
 $resolver->setTransformer('my_block_prefix', $stringTransformer, 'my_widget');
-$resolver->setTransformer();
 $liform = new Liform($resolver);
 ```
 
