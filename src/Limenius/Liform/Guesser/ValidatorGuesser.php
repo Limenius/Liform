@@ -7,6 +7,11 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Form\Guess\ValueGuess;
 use Symfony\Component\Form\Guess\Guess;
 
+/**
+ * Class: ValidatorGuesser
+ *
+ * @see ValidatorTypeGuesser
+ */
 class ValidatorGuesser extends ValidatorTypeGuesser
 {
     /**
@@ -17,7 +22,6 @@ class ValidatorGuesser extends ValidatorTypeGuesser
         return $this->guess($class, $property, function (Constraint $constraint) {
             return $this->guessMinLengthForConstraint($constraint);
         });
-
     }
 
     /**

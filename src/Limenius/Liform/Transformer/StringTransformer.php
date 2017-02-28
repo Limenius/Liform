@@ -15,6 +15,11 @@ class StringTransformer extends AbstractTransformer
 {
     protected $validatorGuesser;
 
+    /**
+     * __construct
+     *
+     * @param mixed $validatorGuesser
+     */
     public function __construct($validatorGuesser = null)
     {
         $this->validatorGuesser = $validatorGuesser;
@@ -86,6 +91,7 @@ class StringTransformer extends AbstractTransformer
         if ($minLength) {
             $schema['minLength'] = $minLength;
         }
+
         return $schema;
     }
 }
