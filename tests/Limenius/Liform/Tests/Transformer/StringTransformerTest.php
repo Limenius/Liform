@@ -1,6 +1,6 @@
 <?php
 
-namespace Limenius\LiformBunlde\Tests\Liform\Transformer;
+namespace Limenius\LiformBundle\Tests\Liform\Transformer;
 
 use Symfony\Component\Form\FormBuilder;
 use Symfony\Component\EventDispatcher\EventDispatcher;
@@ -11,6 +11,8 @@ use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Test\TypeTestCase;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Form\FormTypeExtensionInterface;
+use Symfony\Component\Form\Forms;
+use PHPUnit\Framework\TestCase;
 
 use Limenius\Liform\Form\Extension\AddLiformExtension;
 use Limenius\Liform\Transformer\CompoundTransformer;
@@ -22,15 +24,21 @@ use Limenius\Liform\Resolver;
  *
  * @see TypeTestCase
  */
-class StringTransformerTest extends TypeTestCase
+class StringTransformerTest extends TestCase
 {
-    //protected function getExtensions()
-    //{
-    //    $ext = new AddLiformExtension();
-    //    return array_merge(parent::getExtensions(), array(
-    //        new AddLiformExtension(),
-    //    ));
-    //}
+    /**
+     * @var FormFactoryInterface
+     */
+    protected $factory;
+
+    protected function setUp()
+    {
+        $ext = new AddLiformExtension();
+        $this->factory = Forms::createFormFactoryBuilder()
+            ->addExtensions([])
+            ->addTypeExtensions([$ext])
+            ->getFormFactory();
+    }
 
     /**
      * testPattern
@@ -75,21 +83,20 @@ class StringTransformerTest extends TypeTestCase
         $this->assertContains('firstName', $transformed['required']);
     }
 
-    // TODO: Uncoment this and solve the problem of extension not being recognized
-    //public function testDescription()
-    //{
-    //    $form = $this->factory->create(FormType::class)
-    //        ->add(
-    //            'firstName',
-    //            TextType::class,
-    //            ['liform' => ['description' => 'A word that references you in the hash of the world']]
-    //        );
-    //    $resolver = new Resolver();
-    //    $resolver->addTransformer('text', new StringTransformer());
-    //    $transformer = new CompoundTransformer($resolver);
-    //    $transformed = $transformer->transform($form);
+    public function testDescription()
+    {
+        $form = $this->factory->create(FormType::class)
+            ->add(
+                'firstName',
+                TextType::class,
+                ['liform' => ['description' => 'A word that references you in the hash of the world']]
+            );
+        $resolver = new Resolver();
+        $resolver->setTransformer('text', new StringTransformer());
+        $transformer = new CompoundTransformer($resolver);
+        $transformed = $transformer->transform($form);
 
-    //    $this->assertTrue(is_array($transformed));
-    //    $this->assertArrayHasKey('description', $transformed['properties']['firstName']);
-    //}
+        $this->assertTrue(is_array($transformed));
+        $this->assertArrayHasKey('description', $transformed['properties']['firstName']);
+    }
 }
