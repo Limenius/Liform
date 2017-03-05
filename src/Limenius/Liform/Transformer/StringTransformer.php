@@ -40,13 +40,6 @@ class StringTransformer extends AbstractTransformer
             'type' => 'string',
         ];
 
-
-        if ($liform = $form->getConfig()->getOption('liform')) {
-            if (isset($liform['widget']) && $widget = $liform['widget']) {
-                $schema['widget'] = $widget;
-            }
-        }
-
         $schema = $this->addCommonSpecs($form, $schema, $extensions, $widget);
         $schema = $this->addMaxLength($form, $schema);
         $schema = $this->addMinLength($form, $schema);

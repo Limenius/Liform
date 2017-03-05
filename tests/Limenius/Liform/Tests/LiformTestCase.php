@@ -13,7 +13,6 @@ use Limenius\Liform\Form\Extension\AddLiformExtension;
  * @see TestCase
  */
 class LiformTestCase extends \PHPUnit_Framework_TestCase
-
 {
     /**
      * @var FormFactoryInterface

@@ -25,11 +25,7 @@ class IntegerTransformer extends AbstractTransformer
         $schema = [
             'type' => 'integer',
         ];
-        if ($liform = $form->getConfig()->getOption('liform')) {
-            if ($widget = $liform['widget']) {
-                $schema['widget'] = $widget;
-            }
-        }
+
         $schema = $this->addCommonSpecs($form, $schema, $extensions, $widget);
 
         return $schema;
