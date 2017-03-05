@@ -1,44 +1,21 @@
 <?php
 
-namespace Limenius\LiformBundle\Tests\Liform\Transformer;
+namespace Limenius\Liform\Tests\Liform\Transformer;
 
-use Symfony\Component\Form\FormBuilder;
-use Symfony\Component\EventDispatcher\EventDispatcher;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\Form\Tests\AbstractFormTest;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
-use Symfony\Component\Form\Test\TypeTestCase;
-use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Form\FormTypeExtensionInterface;
-use Symfony\Component\Form\Forms;
-use PHPUnit\Framework\TestCase;
-
-use Limenius\Liform\Form\Extension\AddLiformExtension;
 use Limenius\Liform\Transformer\CompoundTransformer;
 use Limenius\Liform\Transformer\StringTransformer;
 use Limenius\Liform\Resolver;
+use Limenius\Liform\Tests\LiformTestCase;
 
 /**
  * Class: StringTransformerTest
  *
  * @see TypeTestCase
  */
-class StringTransformerTest extends TestCase
+class StringTransformerTest extends LiformTestCase
 {
-    /**
-     * @var FormFactoryInterface
-     */
-    protected $factory;
-
-    protected function setUp()
-    {
-        $ext = new AddLiformExtension();
-        $this->factory = Forms::createFormFactoryBuilder()
-            ->addExtensions([])
-            ->addTypeExtensions([$ext])
-            ->getFormFactory();
-    }
 
     /**
      * testPattern
@@ -98,5 +75,23 @@ class StringTransformerTest extends TestCase
 
         $this->assertTrue(is_array($transformed));
         $this->assertArrayHasKey('description', $transformed['properties']['firstName']);
+    }
+
+    public function testLabel()
+    {
+        $form = $this->factory->create(FormType::class)
+            ->add(
+                'firstName',
+                TextType::class,
+                ['label' => 'a label']
+            );
+        $resolver = new Resolver();
+        $resolver->setTransformer('text', new StringTransformer());
+        $transformer = new CompoundTransformer($resolver);
+        $transformed = $transformer->transform($form);
+
+        $this->assertTrue(is_array($transformed));
+        $this->assertArrayHasKey('title', $transformed['properties']['firstName']);
+        $this->assertEquals('a label', $transformed['properties']['firstName']['title']);
     }
 }
