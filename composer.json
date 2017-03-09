@@ -34,6 +34,8 @@
         ],
         "post-update-cmd": [
             "@default-scripts"
-        ]
+        ],
+        "test": "phpunit",
+        "cs": "phpcs --standard=ruleset.xml -p"
     }
 }
