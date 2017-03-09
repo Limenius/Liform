@@ -52,7 +52,7 @@ class ChoiceTransformer extends AbstractTransformer
         } else {
             $schema = [
                 'enum' => $choices,
-                'liform' => ['enum_titles' => $titles],
+                'enum_titles' => $titles,
                 'type' => 'string',
             ];
         }
