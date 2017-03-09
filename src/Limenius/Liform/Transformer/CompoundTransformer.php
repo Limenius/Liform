@@ -58,10 +58,11 @@ class CompoundTransformer extends AbstractTransformer
         }
         $innerType = $form->getConfig()->getType()->getInnerType();
 
-        if (method_exists($innerType, 'buildLiform')) {
-            $schema['liform'] = $innerType->buildLiform($form);
-        }
         $schema = $this->addCommonSpecs($form, $schema, $extensions, $widget);
+
+        if (method_exists($innerType, 'buildLiform')) {
+            $schema = $innerType->buildLiform($form, $schema);
+        }
 
         return $schema;
     }
