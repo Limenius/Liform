@@ -34,6 +34,11 @@ class FormViewNormalizer implements NormalizerInterface
 
             return $form;
         } else {
+            // handle separatedly the case with checkboxes, so the result is
+            // true/false instead of 1/0
+            if (isset($object->vars['checked'])) {
+                return $object->vars['checked'];
+            }
             return $object->vars['value'];
         }
     }
