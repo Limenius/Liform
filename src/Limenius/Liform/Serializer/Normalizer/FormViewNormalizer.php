@@ -39,6 +39,7 @@ class FormViewNormalizer implements NormalizerInterface
             if (isset($object->vars['checked'])) {
                 return $object->vars['checked'];
             }
+
             return $object->vars['value'];
         }
     }
