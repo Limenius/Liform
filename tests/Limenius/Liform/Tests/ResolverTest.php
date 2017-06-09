@@ -4,6 +4,7 @@ namespace Limenius\Liform\Tests;
 
 use Limenius\Liform\Resolver;
 use Limenius\Liform\Exception\TransformerException;
+use Limenius\Liform\Transformer\StringTransformer;
 use Symfony\Component\Form\Test\TypeTestCase;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
@@ -43,7 +44,8 @@ class ResolverTest extends TypeTestCase
     public function testResolve()
     {
         $resolver = new Resolver();
-        $resolver->setDefaultTransformers();
+        $stub = $this->createMock(StringTransformer::class);
+        $resolver->setTransformer('text', $stub);
         $form = $this->factory->create(TextType::class);
         $this->assertArrayHasKey('transformer', $resolver->resolve($form));
     }

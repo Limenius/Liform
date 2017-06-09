@@ -12,13 +12,18 @@ use Limenius\Liform\Exception\TransformerException;
  */
 class ArrayTransformer extends AbstractTransformer
 {
+    protected $resolver;
+
     /**
      * __construct
      *
+     * @param mixed $translator
+     * @param mixed $validatorGuesser
      * @param mixed $resolver
      */
-    public function __construct($resolver)
+    public function __construct($translator, $validatorGuesser, $resolver)
     {
+        parent::__construct($translator, $validatorGuesser);
         $this->resolver = $resolver;
     }
 

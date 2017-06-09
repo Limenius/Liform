@@ -13,18 +13,6 @@ use Limenius\Liform\Guesser\ValidatorGuesser;
  */
 class StringTransformer extends AbstractTransformer
 {
-    protected $validatorGuesser;
-
-    /**
-     * __construct
-     *
-     * @param mixed $validatorGuesser
-     */
-    public function __construct($validatorGuesser = null)
-    {
-        $this->validatorGuesser = $validatorGuesser;
-    }
-
     /**
      * transform
      *

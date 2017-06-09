@@ -5,6 +5,7 @@ namespace Limenius\Liform\Tests;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\Forms;
 use Limenius\Liform\Form\Extension\AddLiformExtension;
+use Symfony\Component\Translation\Translator;
 
 /**
  *
@@ -19,6 +20,11 @@ class LiformTestCase extends TestCase
      */
     protected $factory;
 
+    /**
+     * @var Translator
+     */
+    protected $translator;
+
     protected function setUp()
     {
         $ext = new AddLiformExtension();
@@ -26,5 +32,7 @@ class LiformTestCase extends TestCase
             ->addExtensions([])
             ->addTypeExtensions([$ext])
             ->getFormFactory();
+
+        $this->translator = $this->createMock(Translator::class);
     }
 }

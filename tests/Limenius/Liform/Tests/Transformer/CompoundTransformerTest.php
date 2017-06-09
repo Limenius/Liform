@@ -8,18 +8,18 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\Tests\AbstractFormTest;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
-use Symfony\Component\Form\Test\TypeTestCase;
 
 use Limenius\Liform\Transformer\CompoundTransformer;
 use Limenius\Liform\Transformer\StringTransformer;
 use Limenius\Liform\Resolver;
+use Limenius\Liform\Tests\LiformTestCase;
 
 /**
  * Class: CompoundTransformerTest
  *
  * @see TypeTestCase
  */
-class CompoundTransformerTest extends TypeTestCase
+class CompoundTransformerTest extends LiformTestCase
 {
 
     /**
@@ -32,8 +32,8 @@ class CompoundTransformerTest extends TypeTestCase
             ->add('firstName', TextType::class)
             ->add('secondName', TextType::class);
         $resolver = new Resolver();
-        $resolver->setTransformer('text', new StringTransformer());
-        $transformer = new CompoundTransformer($resolver);
+        $resolver->setTransformer('text', new StringTransformer($this->translator));
+        $transformer = new CompoundTransformer($this->translator, null, $resolver);
         $transformed = $transformer->transform($form);
         $this->assertTrue(is_array($transformed));
         $this->assertEquals(1, $transformed['properties']['firstName']['propertyOrder']);

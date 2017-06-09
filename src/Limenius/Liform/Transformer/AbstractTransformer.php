@@ -11,6 +11,21 @@ use Symfony\Component\Form\FormInterface;
  */
 abstract class AbstractTransformer
 {
+    protected $translator;
+    protected $validatorGuesser;
+
+    /**
+     * __construct
+     *
+     * @param mixed $translator
+     * @param mixed $validatorGuesser
+     */
+    public function __construct($translator, $validatorGuesser = null)
+    {
+        $this->translator = $translator;
+        $this->validatorGuesser = $validatorGuesser;
+    }
+
     /**
      * @param FormInterface $form
      * @param array         $extensions
@@ -102,9 +117,9 @@ abstract class AbstractTransformer
     protected function addLabel($form, $schema)
     {
         if ($label = $form->getConfig()->getOption('label')) {
-            $schema['title'] = $label;
+            $schema['title'] = $this->translator->trans($label);
         } else {
-            $schema['title'] = $form->getName();
+            $schema['title'] = $this->translator->trans($form->getName());
         }
 
         return $schema;
@@ -135,7 +150,7 @@ abstract class AbstractTransformer
     {
         if ($liform = $form->getConfig()->getOption('liform')) {
             if (isset($liform['description']) && $description = $liform['description']) {
-                $schema['description'] = $description;
+                $schema['description'] = $this->translator->trans($description);
             }
         }
 

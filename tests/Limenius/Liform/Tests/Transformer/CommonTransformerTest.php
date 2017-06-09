@@ -29,8 +29,8 @@ class CommonTransformerTest extends LiformTestCase
                 ['required' => true]
             );
         $resolver = new Resolver();
-        $resolver->setTransformer('text', new StringTransformer());
-        $transformer = new CompoundTransformer($resolver);
+        $resolver->setTransformer('text', new StringTransformer($this->translator));
+        $transformer = new CompoundTransformer($this->translator, null, $resolver);
         $transformed = $transformer->transform($form);
 
         $this->assertTrue(is_array($transformed));
@@ -52,8 +52,8 @@ class CommonTransformerTest extends LiformTestCase
                 ['liform' => ['description' => 'A word that references you in the hash of the world']]
             );
         $resolver = new Resolver();
-        $resolver->setTransformer('text', new StringTransformer());
-        $transformer = new CompoundTransformer($resolver);
+        $resolver->setTransformer('text', new StringTransformer($this->translator));
+        $transformer = new CompoundTransformer($this->translator, null, $resolver);
         $transformed = $transformer->transform($form);
 
         $this->assertTrue(is_array($transformed));
@@ -73,8 +73,12 @@ class CommonTransformerTest extends LiformTestCase
                 ['label' => 'a label']
             );
         $resolver = new Resolver();
-        $resolver->setTransformer('text', new StringTransformer());
-        $transformer = new CompoundTransformer($resolver);
+        $resolver->setTransformer('text', new StringTransformer($this->translator));
+        $this->translator
+            ->expects($this->exactly(2))
+            ->method('trans')
+            ->willReturn('a label');
+        $transformer = new CompoundTransformer($this->translator, null, $resolver);
         $transformed = $transformer->transform($form);
 
         $this->assertTrue(is_array($transformed));
@@ -95,8 +99,8 @@ class CommonTransformerTest extends LiformTestCase
                 ['attr' => ['placeholder' => 'default value']]
             );
         $resolver = new Resolver();
-        $resolver->setTransformer('text', new StringTransformer());
-        $transformer = new CompoundTransformer($resolver);
+        $resolver->setTransformer('text', new StringTransformer($this->translator));
+        $transformer = new CompoundTransformer($this->translator, null, $resolver);
         $transformed = $transformer->transform($form);
 
         $this->assertTrue(is_array($transformed));
@@ -116,8 +120,8 @@ class CommonTransformerTest extends LiformTestCase
                 ['liform' => ['widget' => 'my widget']]
             );
         $resolver = new Resolver();
-        $resolver->setTransformer('text', new StringTransformer());
-        $transformer = new CompoundTransformer($resolver);
+        $resolver->setTransformer('text', new StringTransformer($this->translator));
+        $transformer = new CompoundTransformer($this->translator, null, $resolver);
         $transformed = $transformer->transform($form);
 
         $this->assertTrue(is_array($transformed));
@@ -136,8 +140,8 @@ class CommonTransformerTest extends LiformTestCase
                 TextType::class
             );
         $resolver = new Resolver();
-        $resolver->setTransformer('text', new StringTransformer(), 'widg');
-        $transformer = new CompoundTransformer($resolver);
+        $resolver->setTransformer('text', new StringTransformer($this->translator), 'widg');
+        $transformer = new CompoundTransformer($this->translator, null, $resolver);
         $transformed = $transformer->transform($form);
 
         $this->assertTrue(is_array($transformed));
