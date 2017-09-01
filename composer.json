@@ -18,7 +18,7 @@
         }
     },
     "require": {
-        "symfony/form": "~2.3|~3.0",
+        "symfony/form": "~2.8|~3.0",
         "symfony/translation": "~2.3|~3.0"
     },
     "require-dev": {
