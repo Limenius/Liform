@@ -35,9 +35,9 @@ class ChoiceTransformerTest extends LiformTestCase
         // 4 times: firstName, form, and the two choices
         $this->translator->expects($this->exactly(4))
             ->method('trans')
-            ->will($this->returnCallback(function($str) {
-            return $str . '-translated';
-        }));
+            ->will($this->returnCallback(function ($str) {
+                return $str.'-translated';
+            }));
 
         $resolver = new Resolver();
         $resolver->setTransformer('choice', new Transformer\ChoiceTransformer($this->translator, null));
