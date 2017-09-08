@@ -31,11 +31,11 @@ class ChoiceTransformer extends AbstractTransformer
             if ($choiceView instanceof ChoiceGroupView) {
                 foreach ($choiceView->choices as $choiceItem) {
                     $choices[] = $choiceItem->value;
-                    $titles[] = $choiceItem->label;
+                    $titles[] = $this->translator->trans($choiceItem->label);
                 }
             } else {
                 $choices[] = $choiceView->value;
-                $titles[] = $choiceView->label;
+                $titles[] = $this->translator->trans($choiceView->label);
             }
         }
         if ($formView->vars['multiple']) {
