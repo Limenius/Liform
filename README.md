@@ -103,15 +103,12 @@ To do so, you can use the `setTransformer` method of `Resolver`. In this case we
 
 ```php
 
-use Limenius\Liform\Resolver;
 use Limenius\Liform\Liform;
-use Limenius\Liform\Transformer;
 
-$stringTransformer = new Transformer\StringTransformer();
+$stringTransformer = $this->get('liform.transformer.string');
 
-$resolver = new Resolver();
-$resolver->setDefaultTransformers();
-$resolver->setTransformer('my_block_prefix', $stringTransformer, 'my_widget');
+$resolver = $this->get('liform.resolver');
+$resolver->setTransformer('file', $stringTransformer, 'file_widget');
 $liform = new Liform($resolver);
 ```
 
