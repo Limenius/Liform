@@ -116,10 +116,11 @@ abstract class AbstractTransformer
      */
     protected function addLabel($form, $schema)
     {
+        $translationDomain = $form->getConfig()->getOption('translation_domain');
         if ($label = $form->getConfig()->getOption('label')) {
-            $schema['title'] = $this->translator->trans($label);
+            $schema['title'] = $this->translator->trans($label, [], $translationDomain);
         } else {
-            $schema['title'] = $this->translator->trans($form->getName());
+            $schema['title'] = $this->translator->trans($form->getName(), [], $translationDomain);
         }
 
         return $schema;
