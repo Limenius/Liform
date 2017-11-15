@@ -2,33 +2,31 @@
 
 namespace Limenius\Liform;
 
+use Limenius\Liform\Transformer\ExtensionInterface;
 use Symfony\Component\Form\FormInterface;
-use Limenius\Liform\Transformer\CompoundTransformer;
 
-/**
- * Class: Liform
- *
- */
-class Liform
+class Liform implements LiformInterface
 {
+    /**
+     * @var ResolverInterface
+     */
     private $resolver;
 
+    /**
+     * @var ExtensionInterface[]
+     */
     private $extensions = [];
 
     /**
-     * __construct
-     *
-     * @param Resolver $resolver
+     * @param ResolverInterface $resolver
      */
-    public function __construct(Resolver $resolver)
+    public function __construct(ResolverInterface $resolver)
     {
         $this->resolver = $resolver;
     }
 
     /**
-     * @param FormInterface $form
-     *
-     * @return array
+     * @inheritdoc
      */
     public function transform(FormInterface $form)
     {
@@ -38,11 +36,9 @@ class Liform
     }
 
     /**
-     * @param mixed $extension
-     *
-     * @return Liform
+     * @inheritdoc
      */
-    public function addExtension($extension)
+    public function addExtension(ExtensionInterface $extension)
     {
         $this->extensions[] = $extension;
 

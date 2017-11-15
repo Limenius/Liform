@@ -7,11 +7,6 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Form\Guess\ValueGuess;
 use Symfony\Component\Form\Guess\Guess;
 
-/**
- * Class: ValidatorGuesser
- *
- * @see ValidatorTypeGuesser
- */
 class ValidatorGuesser extends ValidatorTypeGuesser
 {
     /**

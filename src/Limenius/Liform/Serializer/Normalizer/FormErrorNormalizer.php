@@ -1,10 +1,5 @@
 <?php
-/*
- * This file was originally written as part of the FOSRestBundle package.
- *
- * But we need to do this here without FOSRestBundle present, so...
- *
- */
+
 namespace Limenius\Liform\Serializer\Normalizer;
 
 use Symfony\Component\Form\FormError;
@@ -19,6 +14,9 @@ use Symfony\Component\Translation\TranslatorInterface;
  */
 class FormErrorNormalizer implements NormalizerInterface
 {
+    /**
+     * @var TranslatorInterface
+     */
     private $translator;
 
     /**
@@ -30,7 +28,7 @@ class FormErrorNormalizer implements NormalizerInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function normalize($object, $format = null, array $context = [])
     {
@@ -42,7 +40,7 @@ class FormErrorNormalizer implements NormalizerInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function supportsNormalization($data, $format = null)
     {
@@ -51,6 +49,10 @@ class FormErrorNormalizer implements NormalizerInterface
 
     /**
      * This code has been taken from JMSSerializer.
+     *
+     * @param FormInterface $data
+     *
+     * @return array
      */
     private function convertFormToArray(FormInterface $data)
     {
@@ -58,21 +60,30 @@ class FormErrorNormalizer implements NormalizerInterface
         foreach ($data->getErrors() as $error) {
             $errors[] = $this->getErrorMessage($error);
         }
+
         if ($errors) {
             $form['errors'] = $errors;
         }
+
         $children = [];
         foreach ($data->all() as $child) {
             if ($child instanceof FormInterface) {
                 $children[$child->getName()] = $this->convertFormToArray($child);
             }
         }
+
         if ($children) {
             $form['children'] = $children;
         }
 
         return $form;
     }
+
+    /**
+     * @param FormError $error
+     *
+     * @return string
+     */
     private function getErrorMessage(FormError $error)
     {
         if (null !== $error->getMessagePluralization()) {

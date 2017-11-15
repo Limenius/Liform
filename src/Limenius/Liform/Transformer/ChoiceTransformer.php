@@ -5,23 +5,12 @@ namespace Limenius\Liform\Transformer;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\ChoiceList\View\ChoiceGroupView;
 
-/**
- * Class: ChoiceTransformer
- *
- * @see AbstractTransformer
- */
 class ChoiceTransformer extends AbstractTransformer
 {
     /**
-     * transform
-     *
-     * @param FormInterface $form
-     * @param array         $extensions
-     * @param srting|null   $widget
-     *
-     * @return array
+     * @inheritdoc
      */
-    public function transform(FormInterface $form, $extensions = [], $widget = null)
+    public function transform(FormInterface $form, array $extensions = [], $widget = null)
     {
         $formView = $form->createView();
 
@@ -38,6 +27,7 @@ class ChoiceTransformer extends AbstractTransformer
                 $titles[] = $this->translator->trans($choiceView->label);
             }
         }
+
         if ($formView->vars['multiple']) {
             $schema = [
                 'items' => [

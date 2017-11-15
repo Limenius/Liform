@@ -5,10 +5,6 @@ namespace Limenius\Liform;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\ResolvedFormTypeInterface;
 
-/**
- * Class: FormUtil
- *
- */
 class FormUtil
 {
     /**
@@ -45,6 +41,7 @@ class FormUtil
      * Returns the dataClass of the form or its parents, if any
      *
      * @param mixed $formType
+     *
      * @return string|null the dataClass
      */
     public static function findDataClass($formType)

@@ -1,22 +1,14 @@
 <?php
+
 namespace Limenius\Liform\Serializer\Normalizer;
 
-use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use Symfony\Component\Translation\TranslatorInterface;
 
-use Limenius\LiformBundle\Liform\FormUtil;
-
-/**
- * Class: FormViewNormalizer
- *
- * @see NormalizerInterface
- */
 class FormViewNormalizer implements NormalizerInterface
 {
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function normalize($object, $format = null, array $context = [])
     {
@@ -45,7 +37,7 @@ class FormViewNormalizer implements NormalizerInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function supportsNormalization($data, $format = null)
     {
