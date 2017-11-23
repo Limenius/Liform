@@ -2,41 +2,37 @@
 
 namespace Limenius\Liform\Transformer;
 
-use Symfony\Component\Form\FormInterface;
 use Limenius\Liform\Exception\TransformerException;
+use Limenius\Liform\ResolverInterface;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormTypeGuesserInterface;
+use Symfony\Component\Translation\TranslatorInterface;
 
-/**
- * Class: ArrayTransformer
- *
- * @see AbstractTransformer
- */
 class ArrayTransformer extends AbstractTransformer
 {
+    /**
+     * @var ResolverInterface
+     */
     protected $resolver;
 
     /**
-     * __construct
-     *
-     * @param mixed $translator
-     * @param mixed $validatorGuesser
-     * @param mixed $resolver
+     * @param TranslatorInterface           $translator
+     * @param FormTypeGuesserInterface|null $validatorGuesser
+     * @param ResolverInterface             $resolver
      */
-    public function __construct($translator, $validatorGuesser, $resolver)
-    {
+    public function __construct(
+        TranslatorInterface $translator,
+        FormTypeGuesserInterface $validatorGuesser = null,
+        ResolverInterface $resolver
+    ) {
         parent::__construct($translator, $validatorGuesser);
         $this->resolver = $resolver;
     }
 
     /**
-     * transform
-     *
-     * @param FormInterface $form
-     * @param array         $extensions
-     * @param srting|null   $widget
-     *
-     * @return array
+     * @inheritdoc
      */
-    public function transform(FormInterface $form, $extensions = [], $widget = null)
+    public function transform(FormInterface $form, array $extensions = [], $widget = null)
     {
         $children = [];
 
@@ -52,9 +48,11 @@ class ArrayTransformer extends AbstractTransformer
 
         if (empty($children)) {
             $entryType = $form->getConfig()->getAttribute('prototype');
+
             if (!$entryType) {
                 throw new TransformerException('Liform cannot infer the json-schema representation of a an empty Collection or array-like type without the option "allow_add" (to check the proptotype). Evaluating "'.$form->getName().'"');
             }
+
             $transformerData = $this->resolver->resolve($entryType);
             $children[] = $transformerData['transformer']->transform($entryType, $extensions, $transformerData['widget']);
             $children[0]['title'] = 'prototype';

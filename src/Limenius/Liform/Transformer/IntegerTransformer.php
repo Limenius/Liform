@@ -4,28 +4,14 @@ namespace Limenius\Liform\Transformer;
 
 use Symfony\Component\Form\FormInterface;
 
-/**
- * Class: StringTransformer
- *
- * @see AbstractTransformer
- */
 class IntegerTransformer extends AbstractTransformer
 {
     /**
-     * transform
-     *
-     * @param FormInterface $form
-     * @param array         $extensions
-     * @param srting|null   $widget
-     *
-     * @return array
+     * @inheritdoc
      */
-    public function transform(FormInterface $form, $extensions = [], $widget = null)
+    public function transform(FormInterface $form, array $extensions = [], $widget = null)
     {
-        $schema = [
-            'type' => 'integer',
-        ];
-
+        $schema = ['type' => 'integer'];
         $schema = $this->addCommonSpecs($form, $schema, $extensions, $widget);
 
         return $schema;

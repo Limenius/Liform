@@ -3,46 +3,39 @@
 namespace Limenius\Liform\Transformer;
 
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormTypeGuesserInterface;
+use Symfony\Component\Translation\TranslatorInterface;
 
-/**
- * Class: AbstractTransformer
- *
- * @abstract
- */
-abstract class AbstractTransformer
+abstract class AbstractTransformer implements TransformerInterface
 {
+    /**
+     * @var TranslatorInterface
+     */
     protected $translator;
+
+    /**
+     * @var FormTypeGuesserInterface|null
+     */
     protected $validatorGuesser;
 
     /**
-     * __construct
-     *
-     * @param mixed $translator
-     * @param mixed $validatorGuesser
+     * @param TranslatorInterface           $translator
+     * @param FormTypeGuesserInterface|null $validatorGuesser
      */
-    public function __construct($translator, $validatorGuesser = null)
+    public function __construct(TranslatorInterface $translator, FormTypeGuesserInterface $validatorGuesser = null)
     {
         $this->translator = $translator;
         $this->validatorGuesser = $validatorGuesser;
     }
 
     /**
-     * @param FormInterface $form
-     * @param array         $extensions
-     * @param string        $widget
+     * @param ExtensionInterface[] $extensions
+     * @param FormInterface        $form
+     * @param array                $schema
      *
      * @return array
      */
-    abstract public function transform(FormInterface $form, $extensions = [], $widget = null);
-
-    /**
-     * @param array $extensions
-     * @param mixed $form
-     * @param array $schema
-     *
-     * @return array
-     */
-    protected function applyExtensions($extensions, $form, $schema)
+    protected function applyExtensions(array $extensions, FormInterface $form, array $schema)
     {
         $newSchema = $schema;
         foreach ($extensions as $extension) {
@@ -53,14 +46,14 @@ abstract class AbstractTransformer
     }
 
     /**
-     * @param mixed $form
-     * @param array $schema
-     * @param array $extensions
-     * @param string $widget
+     * @param FormInterface        $form
+     * @param array                $schema
+     * @param ExtensionInterface[] $extensions
+     * @param string               $widget
      *
      * @return array
      */
-    protected function addCommonSpecs($form, $schema, $extensions = [], $widget)
+    protected function addCommonSpecs(FormInterface $form, array $schema, $extensions = [], $widget)
     {
         $schema = $this->addLabel($form, $schema);
         $schema = $this->addAttr($form, $schema);
@@ -75,12 +68,12 @@ abstract class AbstractTransformer
 
 
     /**
-     * @param mixed $form
-     * @param array $schema
+     * @param FormInterface $form
+     * @param array         $schema
      *
      * @return array
      */
-    protected function addDefault($form, $schema)
+    protected function addDefault(FormInterface $form, array $schema)
     {
         if ($attr = $form->getConfig()->getOption('attr')) {
             if (isset($attr['placeholder'])) {
@@ -92,12 +85,12 @@ abstract class AbstractTransformer
     }
 
     /**
-     * @param mixed $form
-     * @param array $schema
+     * @param FormInterface $form
+     * @param array         $schema
      *
      * @return array
      */
-    protected function addPattern($form, $schema)
+    protected function addPattern(FormInterface $form, array $schema)
     {
         if ($attr = $form->getConfig()->getOption('attr')) {
             if (isset($attr['pattern'])) {
@@ -109,12 +102,12 @@ abstract class AbstractTransformer
     }
 
     /**
-     * @param mixed $form
-     * @param array $schema
+     * @param FormInterface $form
+     * @param array         $schema
      *
      * @return array
      */
-    protected function addLabel($form, $schema)
+    protected function addLabel(FormInterface $form, array $schema)
     {
         $translationDomain = $form->getConfig()->getOption('translation_domain');
         if ($label = $form->getConfig()->getOption('label')) {
@@ -127,12 +120,12 @@ abstract class AbstractTransformer
     }
 
     /**
-     * @param mixed $form
-     * @param array $schema
+     * @param FormInterface $form
+     * @param array         $schema
      *
      * @return array
      */
-    protected function addAttr($form, $schema)
+    protected function addAttr(FormInterface $form, array $schema)
     {
         if ($attr = $form->getConfig()->getOption('attr')) {
             $schema['attr'] = $attr;
@@ -142,12 +135,12 @@ abstract class AbstractTransformer
     }
 
     /**
-     * @param mixed $form
-     * @param array $schema
+     * @param FormInterface $form
+     * @param array         $schema
      *
      * @return array
      */
-    protected function addDescription($form, $schema)
+    protected function addDescription(FormInterface $form, array $schema)
     {
         if ($liform = $form->getConfig()->getOption('liform')) {
             if (isset($liform['description']) && $description = $liform['description']) {
@@ -159,13 +152,13 @@ abstract class AbstractTransformer
     }
 
     /**
-     * @param mixed $form
-     * @param array $schema
-     * @param mixed $configWidget
+     * @param FormInterface $form
+     * @param array         $schema
+     * @param mixed         $configWidget
      *
      * @return array
      */
-    protected function addWidget($form, $schema, $configWidget)
+    protected function addWidget(FormInterface $form, array $schema, $configWidget)
     {
         if ($liform = $form->getConfig()->getOption('liform')) {
             if (isset($liform['widget']) && $widget = $liform['widget']) {
@@ -179,11 +172,11 @@ abstract class AbstractTransformer
     }
 
     /**
-     * @param mixed $form
+     * @param FormInterface $form
      *
      * @return boolean
      */
-    protected function isRequired($form)
+    protected function isRequired(FormInterface $form)
     {
         return $form->getConfig()->getOption('required');
     }

@@ -2,36 +2,32 @@
 
 namespace Limenius\Liform;
 
-use Symfony\Component\Form\FormInterface;
-use Limenius\Liform\Transformer;
-use Limenius\Liform\Transformer\AbstractTransformer;
 use Limenius\Liform\Exception\TransformerException;
+use Limenius\Liform\Transformer\TransformerInterface;
+use Symfony\Component\Form\FormInterface;
 
-/**
- * Class: Resolver
- *
- */
-class Resolver
+class Resolver implements ResolverInterface
 {
+    /**
+     * @var TransformerInterface[]
+     */
     private $transformers = [];
 
     /**
-     * @param mixed $formType
-     * @param mixed $transformer
-     * @param mixed $widget
+     * @param string               $formType
+     * @param TransformerInterface $transformer
+     * @param string|null          $widget
      */
-    public function setTransformer($formType, AbstractTransformer $transformer, $widget = null)
+    public function setTransformer($formType, TransformerInterface $transformer, $widget = null)
     {
         $this->transformers[$formType] = [
             'transformer' => $transformer,
             'widget' => $widget,
-            ];
+        ];
     }
 
     /**
-     * @param FormInterface $form
-     *
-     * @return array
+     * @inheritdoc
      */
     public function resolve(FormInterface $form)
     {

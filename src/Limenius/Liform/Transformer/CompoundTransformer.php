@@ -2,45 +2,42 @@
 
 namespace Limenius\Liform\Transformer;
 
-use Symfony\Component\Form\FormInterface;
 use Limenius\Liform\FormUtil;
+use Limenius\Liform\ResolverInterface;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormTypeGuesserInterface;
+use Symfony\Component\Translation\TranslatorInterface;
 
-/**
- * Class: CompoundTransformer
- *
- * @see AbstractTransformer
- */
 class CompoundTransformer extends AbstractTransformer
 {
+    /**
+     * @var ResolverInterface
+     */
     protected $resolver;
 
     /**
-     * __construct
-     *
-     * @param mixed $translator
-     * @param mixed $validatorGuesser
-     * @param mixed $resolver
+     * @param TranslatorInterface           $translator
+     * @param FormTypeGuesserInterface|null $validatorGuesser
+     * @param ResolverInterface             $resolver
      */
-    public function __construct($translator, $validatorGuesser, $resolver)
-    {
+    public function __construct(
+        TranslatorInterface $translator,
+        FormTypeGuesserInterface $validatorGuesser = null,
+        ResolverInterface $resolver
+    ) {
         parent::__construct($translator, $validatorGuesser);
         $this->resolver = $resolver;
     }
 
     /**
-     * transform
-     *
-     * @param FormInterface $form
-     * @param array         $extensions
-     * @param srting|null   $widget
-     *
-     * @return array
+     * @inheritdoc
      */
-    public function transform(FormInterface $form, $extensions = [], $widget = null)
+    public function transform(FormInterface $form, array $extensions = [], $widget = null)
     {
         $data = [];
         $order = 1;
         $required = [];
+
         foreach ($form->all() as $name => $field) {
             $transformerData = $this->resolver->resolve($field);
             $transformedChild = $transformerData['transformer']->transform($field, $extensions, $transformerData['widget']);
@@ -52,6 +49,7 @@ class CompoundTransformer extends AbstractTransformer
                 $required[] = $field->getName();
             }
         }
+
         $schema = [
             'title' => $form->getConfig()->getOption('label'),
             'type' => 'object',
@@ -61,6 +59,7 @@ class CompoundTransformer extends AbstractTransformer
         if (!empty($required)) {
             $schema['required'] = $required;
         }
+
         $innerType = $form->getConfig()->getType()->getInnerType();
 
         $schema = $this->addCommonSpecs($form, $schema, $extensions, $widget);
