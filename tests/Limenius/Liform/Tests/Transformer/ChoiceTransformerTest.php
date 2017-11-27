@@ -41,4 +41,38 @@ class ChoiceTransformerTest extends LiformTestCase
         $this->assertArrayHasKey('enum', $transformed['properties']['firstName']);
         $this->assertEquals(['A', 'B'], $transformed['properties']['firstName']['enum']);
     }
+
+    /**
+     * testMultipleChoice - Ensure that the schema produced matches what the ChoiceType would expect
+     */
+    public function testMultipleChoice()
+    {
+        $form = $this->factory->create(FormType::class)
+            ->add(
+                'favoriteColours',
+                Type\ChoiceType::class,
+                [
+                    'multiple' => true,
+                    'choices' => [
+                        'RED' => 'Red',
+                        'BLUE' => 'Blue',
+                        'GREEN' => 'Green'
+                    ]
+                ]
+            );
+
+
+        $this->translator
+            ->method('trans')
+            ->will($this->returnCallback(function ($str) {
+                return $str;
+            }));
+
+        $resolver = new Resolver();
+        $resolver->setTransformer('choice', new Transformer\ChoiceTransformer($this->translator, null));
+        $transformer = new CompoundTransformer($this->translator, null, $resolver);
+        $transformed = $transformer->transform($form);
+        $this->assertEquals(['RED', 'BLUE', 'GREEN'], $transformed['properties']['favoriteColours']['items']['enum_titles']);
+        $this->assertEquals(['Red', 'Blue', 'Green'], $transformed['properties']['favoriteColours']['items']['enum']);
+    }
 }

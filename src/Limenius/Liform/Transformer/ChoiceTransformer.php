@@ -43,7 +43,7 @@ class ChoiceTransformer extends AbstractTransformer
                 'items' => [
                     'type' => 'string',
                     'enum' => $choices,
-                    'liform' => ['enum_titles' => $titles],
+                    'enum_titles' => $titles,
                     'minItems' => $this->isRequired($form) ? 1 : 0,
                 ],
                 'uniqueItems' => true,
