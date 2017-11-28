@@ -15,32 +15,50 @@ use Limenius\LiformBundle\Liform\FormUtil;
  */
 class FormViewNormalizer implements NormalizerInterface
 {
+
+    /**
+     * For some widgets, such as the ArrayField it is necessary to serialise the form as an array not an object.
+     */
+    const NORMALIZATION_STRATEGY = 'NormalizationStrategy';
+    /**
+     * Normalize the children of the form as an array, not an object.
+     */
+    const CHILDREN_AS_ARRAY = 'ChildrenAsArray';
+
     /**
      * {@inheritdoc}
      */
-    public function normalize($object, $format = null, array $context = [])
+    public function normalize($form, $format = null, array $context = [])
     {
-        if (!empty($object->children)) {
-            // Force serialization as {} instead of []
-            $form = (object) array();
-            foreach ($object->children as $name => $child) {
+        if (!empty($form->children)) {
+            $useArray = $this->useArrayForChildren($form);
+
+            $serializedForm = $useArray ? array() : (object) array();
+
+            foreach ($form->children as $name => $child) {
                 // Skip empty values because
                 // https://github.com/erikras/redux-form/issues/2149
                 if (empty($child->children) && ($child->vars['value'] === null || $child->vars['value'] === '')) {
                     continue;
                 }
-                $form->{$name} = $this->normalize($child);
+                $normalChild = $this->normalize($child);
+
+                if ($useArray) {
+                    $serializedForm[] = $normalChild;
+                } else {
+                    $serializedForm->{$name} = $normalChild;
+                }
             }
 
-            return $form;
+            return $serializedForm;
         } else {
-            // handle separatedly the case with checkboxes, so the result is
+            // handle separately the case with checkboxes, so the result is
             // true/false instead of 1/0
-            if (isset($object->vars['checked'])) {
-                return $object->vars['checked'];
+            if (isset($form->vars['checked'])) {
+                return $form->vars['checked'];
             }
 
-            return $object->vars['value'];
+            return $form->vars['value'];
         }
     }
 
@@ -50,5 +68,22 @@ class FormViewNormalizer implements NormalizerInterface
     public function supportsNormalization($data, $format = null)
     {
         return $data instanceof FormView;
+    }
+
+    /**
+     * In some cases the children of the form should be serialized as an array. This is controlled by a var on the
+     * FormView.
+     *
+     * @param $object
+     *
+     * @return bool
+     *
+     * @see FormViewNormalizer::NORMALIZATION_STRATEGY
+     * @see FormViewNormalizer::CHILDREN_AS_ARRAY
+     */
+    protected function useArrayForChildren($object)
+    {
+        return key_exists(self::NORMALIZATION_STRATEGY, $object->vars)
+            && $object->vars[self::NORMALIZATION_STRATEGY] === self::CHILDREN_AS_ARRAY;
     }
 }
