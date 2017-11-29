@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-<ruleset name="ReactBundle">
-    <description>ReactBundle coding standard.</description>
+<ruleset name="Liform">
+    <description>Liform coding standard.</description>
 
     <exclude-pattern>vendor/</exclude-pattern>
     <exclude-pattern>Resources/</exclude-pattern>

@@ -1,10 +1,24 @@
 <?php
 
+/*
+ * This file is part of the Limenius\Liform package.
+ *
+ * (c) Limenius <https://github.com/Limenius/>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Limenius\Liform\Serializer\Normalizer;
 
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
+/**
+ * Normalize instances of FormView
+ *
+ * @author Nacho Martín <nacho@limenius.com>
+ */
 class FormViewNormalizer implements NormalizerInterface
 {
     /**

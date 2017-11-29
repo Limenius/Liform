@@ -1,9 +1,9 @@
 Liform
 ======
 
-Liform is a library for serializing Symfony Forms into [JSON schema](http://json-schema.org/). It can be used along with [liform-react](https://github.com/Limenius/liform-react) or [json-editor](https://github.com/jdorn/json-editor), or any other form generator based in json-schema.
+Liform is a library for serializing Symfony Forms into [JSON schema](http://json-schema.org/). It can be used along with [liform-react](https://github.com/Limenius/liform-react) or [json-editor](https://github.com/jdorn/json-editor), or any other form generator based on json-schema.
 
-It is used by [LiformBundle](https://github.com/Limenius/LiformBundle) but can be used stand-alone.
+It is used by [LiformBundle](https://github.com/Limenius/LiformBundle) but can also be used as a stand-alone library.
 
 It is very annoying to maintain backend forms that match forms in a client technology, such as JavaScript. It is also annoying to maintain a documentation of such forms. And error prone.
 
@@ -16,7 +16,7 @@ Liform generates a JSON schema representation, that serves as documentation and 
 
 ## Installation
 
-Open a command console, enter your project directory and execute the
+Open a console, enter your project directory and execute the
 following command to download the latest stable version of this library:
 
     $ composer require limenius/liform
@@ -97,9 +97,9 @@ And `$schema` will contain a JSON Schema representation such as:
 
 ## Using your own transformers
 
-Liform works by inspecting recursively the form, finding (resolving) the right transformer for every child and using that transformer to build the corresponding slice of the json-schema. So, if you want to modify the way a particular form type is transformed, you should set a transformer that matches a type with that `block_prefix`.
+Liform works by inspecting the form recursively, finding (resolving) the right transformer for every child and using that transformer to build the corresponding slice of the json-schema. So, if you want to modify the way a particular form type is transformed, you should set a transformer that matches a type with that `block_prefix`.
 
-To do so, you can use the `setTransformer` method of `Resolver`. In this case we are reusing the StringTransformer, just making it set the widget property to my_widget, but you could use your very own transformer:
+To do so, you can use the `setTransformer` method of the `Resolver` class. In this case we are reusing the StringTransformer, by overriding the widget property and setting it to `my_widget`, but you could use your very own transformer if you like:
 
 ```php
 
@@ -132,7 +132,7 @@ To obtain an array of initial values that match your json-schema.
 ## Serializing errors
 
 
-This library provides a normalizer to serialize forms with errors into an array. This part was shameless taken from [FOSRestBundle](https://github.com/FriendsOfSymfony/FOSRestBundle/blob/master/Serializer/Normalizer/FormErrorNormalizer.php). Just do in your action:
+This library provides a normalizer to serialize forms with errors into an array. This part was shamelessly taken from [FOSRestBundle](https://github.com/FriendsOfSymfony/FOSRestBundle/blob/master/Serializer/Normalizer/FormErrorNormalizer.php). To use this feature copy the following code in your controller action:
 
 ```php
 use Limenius\Liform\Serializer\Normalizer\FormErrorNormalizer;
@@ -150,7 +150,7 @@ To obtain an array with the errors of your form. [liform-react](https://github.c
 
 The goal of Liform is to extract as much data as possible from the form in order to have a complete representation with validation and UI hints in the schema. The options currently supported are.
 
-Some of the data can be extracted from the usual form attributes, however, some attributes will be provided using a special `liform` array that is passed to the form options. To do so in a confortable way a [form extension](http://symfony.com/doc/current/form/create_form_type_extension.html) is provided. See [AddLiformExtension.php](https://github.com/Limenius/Liform/blob/master/src/Limenius/Liform/Form/Extension/AddLiformExtension.php) 
+Some of the data can be extracted from the usual form attributes, however, some attributes will be provided using a special `liform` array that is passed to the form options. To do so in a comfortable way a [form extension](http://symfony.com/doc/current/form/create_form_type_extension.html) is provided. See [AddLiformExtension.php](https://github.com/Limenius/Liform/blob/master/src/Limenius/Liform/Form/Extension/AddLiformExtension.php) 
 
 ### Required
 
@@ -186,7 +186,8 @@ class DummyType extends AbstractType
 
 ### Widget
 
-Some times it is not enough with the type to specify how this field should be render, and you may want to specify that you would like to use a particular widget.
+Sometimes you might want to render a field differently then the default behaviour for that type. By using the liform attributes you can specify a particular widget that determines how this field is rendered.
+
 
 If the attribute `widget` of `liform` is provided, as in the following code: 
 

@@ -1,15 +1,24 @@
 <?php
 
+/*
+ * This file is part of the Limenius\Liform package.
+ *
+ * (c) Limenius <https://github.com/Limenius/>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Limenius\Liform\Tests;
 
+use Limenius\Liform\Form\Extension\AddLiformExtension;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\Forms;
-use Limenius\Liform\Form\Extension\AddLiformExtension;
-use Symfony\Component\Translation\Translator;
+use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  *
- * Common test utils
+ * @author Nacho Martín <nacho@limenius.com>
  *
  * @see TestCase
  */
@@ -21,7 +30,7 @@ class LiformTestCase extends TestCase
     protected $factory;
 
     /**
-     * @var Translator
+     * @var TranslatorInterface
      */
     protected $translator;
 
@@ -33,6 +42,6 @@ class LiformTestCase extends TestCase
             ->addTypeExtensions([$ext])
             ->getFormFactory();
 
-        $this->translator = $this->createMock(Translator::class);
+        $this->translator = $this->createMock(TranslatorInterface::class);
     }
 }
