@@ -45,7 +45,7 @@ class ChoiceTransformer extends AbstractTransformer
                     'minItems' => $this->isRequired($form) ? 1 : 0,
                 ],
                 'uniqueItems' => true,
-                'type' => 'array',
+                'type' => 'object',
             ];
 
             if (count($choices)) {
