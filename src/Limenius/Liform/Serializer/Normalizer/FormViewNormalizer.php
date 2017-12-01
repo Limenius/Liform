@@ -1,12 +1,9 @@
 <?php
+
 namespace Limenius\Liform\Serializer\Normalizer;
 
-use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use Symfony\Component\Translation\TranslatorInterface;
-
-use Limenius\LiformBundle\Liform\FormUtil;
 
 /**
  * Class: FormViewNormalizer
@@ -30,9 +27,9 @@ class FormViewNormalizer implements NormalizerInterface
      */
     public function normalize($form, $format = null, array $context = [])
     {
-        if (!empty($form->children)) {
-            $useArray = $this->useArrayForChildren($form);
+        $useArray = $this->useArrayForChildren($form);
 
+        if (!empty($form->children)) {
             $serializedForm = $useArray ? array() : (object) array();
 
             foreach ($form->children as $name => $child) {
@@ -58,7 +55,14 @@ class FormViewNormalizer implements NormalizerInterface
                 return $form->vars['checked'];
             }
 
-            return $form->vars['value'];
+            $value = $form->vars['value'];
+
+            //If this is an iterable it's likely that the widget is expecting an array, not stdObject
+            if ($value instanceof \Traversable && iterator_count($value) === 0 && $useArray) {
+                return array();
+            }
+
+            return $value;
         }
     }
 
