@@ -75,4 +75,42 @@ class ChoiceTransformerTest extends LiformTestCase
         $this->assertEquals(['RED', 'BLUE', 'GREEN'], $transformed['properties']['favoriteColours']['items']['enum_titles']);
         $this->assertEquals(['Red', 'Blue', 'Green'], $transformed['properties']['favoriteColours']['items']['enum']);
     }
+
+    /**
+     * testSingleEmptyChoice - Add a ChoiceType with no options, ensure that the schema does not have enum or enum_titles
+     * as an enum must not be an empty array
+     *
+     * @see http://json-schema.org/latest/json-schema-validation.html#rfc.section.6.1.2
+     */
+    public function testSingleEmptyChoice()
+    {
+        $form = $this->factory->create(FormType::class)
+            ->add(
+                'favoriteColours',
+                Type\ChoiceType::class,
+                [
+                    'choices' => []
+                ]
+            );
+
+        $resolver = new Resolver();
+        $resolver->setTransformer('choice', new Transformer\ChoiceTransformer($this->translator, null));
+        $transformer = new CompoundTransformer($this->translator, null, $resolver);
+        $transformed = $transformer->transform($form);
+
+        $this->assertArrayNotHasKey('enum', $transformed['properties']['favoriteColours']);
+        $this->assertArrayNotHasKey('enum_titles', $transformed['properties']['favoriteColours']);
+        $this->assertEquals('string', $transformed['properties']['favoriteColours']['type']);
+    }
+
+    /**
+     * testMultipleEmptyChoice - Add a ChoiceType with no options, ensure that the items do not have enum or enum_titles
+     * as an enum must not be an empty array.
+     *
+     * @see http://json-schema.org/latest/json-schema-validation.html#rfc.section.6.1.2
+     */
+    public function testMultipleEmptyChoice()
+    {
+        $this->markTestIncomplete();
+    }
 }

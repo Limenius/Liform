@@ -42,19 +42,24 @@ class ChoiceTransformer extends AbstractTransformer
             $schema = [
                 'items' => [
                     'type' => 'string',
-                    'enum' => $choices,
-                    'enum_titles' => $titles,
                     'minItems' => $this->isRequired($form) ? 1 : 0,
                 ],
                 'uniqueItems' => true,
                 'type' => 'array',
             ];
+
+            if (count($choices)) {
+                $schema['items']['enum'] = $choices;
+                $schema['items']['enum_titles'] = $titles;
+            }
         } else {
             $schema = [
-                'enum' => $choices,
-                'enum_titles' => $titles,
                 'type' => 'string',
             ];
+            if (count($choices)) {
+                $schema['enum'] = $choices;
+                $schema['enum_titles'] = $titles;
+            }
         }
 
         $schema = $this->addCommonSpecs($form, $schema, $extensions, $widget);
