@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the Limenius\Liform package.
+ *
+ * (c) Limenius <https://github.com/Limenius/>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Limenius\Liform\Tests\Liform\Transformer;
 
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -10,16 +19,12 @@ use Limenius\Liform\Resolver;
 use Limenius\Liform\Tests\LiformTestCase;
 
 /**
- * Class: CommonTransformerTest
+ * @author Nacho Martín <nacho@limenius.com>
  *
  * @see TypeTestCase
  */
 class CommonTransformerTest extends LiformTestCase
 {
-    /**
-     * testRequired
-     *
-     */
     public function testRequired()
     {
         $form = $this->factory->create(FormType::class)
@@ -39,10 +44,6 @@ class CommonTransformerTest extends LiformTestCase
         $this->assertContains('firstName', $transformed['required']);
     }
 
-    /**
-     * testDescription
-     *
-     */
     public function testDescription()
     {
         $form = $this->factory->create(FormType::class)
@@ -60,10 +61,6 @@ class CommonTransformerTest extends LiformTestCase
         $this->assertArrayHasKey('description', $transformed['properties']['firstName']);
     }
 
-    /**
-     * testLabel
-     *
-     */
     public function testLabel()
     {
         $form = $this->factory->create(FormType::class)
@@ -86,10 +83,6 @@ class CommonTransformerTest extends LiformTestCase
         $this->assertEquals('a label', $transformed['properties']['firstName']['title']);
     }
 
-    /**
-     * testPlaceholder
-     *
-     */
     public function testPlaceholder()
     {
         $form = $this->factory->create(FormType::class)
@@ -107,10 +100,6 @@ class CommonTransformerTest extends LiformTestCase
         $this->assertArrayHasKey('default', $transformed['properties']['firstName']);
     }
 
-    /**
-     * testWidget
-     *
-     */
     public function testWidget()
     {
         $form = $this->factory->create(FormType::class)
@@ -128,10 +117,6 @@ class CommonTransformerTest extends LiformTestCase
         $this->assertArrayHasKey('widget', $transformed['properties']['firstName']);
     }
 
-    /**
-     * testWidgetViaTransformerDefinition
-     *
-     */
     public function testWidgetViaTransformerDefinition()
     {
         $form = $this->factory->create(FormType::class)

@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the Limenius\Liform package.
+ *
+ * (c) Limenius <https://github.com/Limenius/>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Limenius\Liform\Guesser;
 
 use Symfony\Component\Form\Extension\Validator\ValidatorTypeGuesser;
@@ -7,10 +16,13 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Form\Guess\ValueGuess;
 use Symfony\Component\Form\Guess\Guess;
 
+/**
+ * @author Nacho Martín <nacho@limenius.com>
+ */
 class ValidatorGuesser extends ValidatorTypeGuesser
 {
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function guessMinLength($class, $property)
     {

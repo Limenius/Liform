@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the Limenius\Liform package.
+ *
+ * (c) Limenius <https://github.com/Limenius/>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Limenius\Liform\Tests;
 
 use Limenius\Liform\Resolver;
@@ -10,16 +19,12 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 
 /**
- * Class: ResolverTest
+ * @author Nacho Martín <nacho@limenius.com>
  *
  * @see TypeTestCase
  */
 class ResolverTest extends TypeTestCase
 {
-    /**
-     * testConstruct
-     *
-     */
     public function testConstruct()
     {
         $resolver = new Resolver();
@@ -27,8 +32,6 @@ class ResolverTest extends TypeTestCase
     }
 
     /**
-     * testCannotResolve
-     *
      * @expectedException \Limenius\Liform\Exception\TransformerException
      */
     public function testCannotResolve()
@@ -38,9 +41,6 @@ class ResolverTest extends TypeTestCase
         $this->assertArrayHasKey('transformer', $resolver->resolve($form));
     }
 
-    /**
-     * testResolve
-     */
     public function testResolve()
     {
         $resolver = new Resolver();
