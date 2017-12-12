@@ -22,7 +22,7 @@ use Symfony\Component\Form\Guess\Guess;
 class ValidatorGuesser extends ValidatorTypeGuesser
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function guessMinLength($class, $property)
     {

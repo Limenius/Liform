@@ -21,7 +21,7 @@ use Symfony\Component\Form\FormInterface;
 class StringTransformer extends AbstractTransformer
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function transform(FormInterface $form, array $extensions = [], $widget = null)
     {

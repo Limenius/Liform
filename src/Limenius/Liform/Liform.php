@@ -38,7 +38,7 @@ class Liform implements LiformInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function transform(FormInterface $form)
     {
@@ -48,7 +48,7 @@ class Liform implements LiformInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function addExtension(ExtensionInterface $extension)
     {

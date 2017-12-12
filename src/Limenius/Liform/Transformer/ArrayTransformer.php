@@ -42,7 +42,7 @@ class ArrayTransformer extends AbstractTransformer
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function transform(FormInterface $form, array $extensions = [], $widget = null)
     {

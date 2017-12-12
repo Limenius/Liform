@@ -37,7 +37,7 @@ class FormErrorNormalizer implements NormalizerInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function normalize($object, $format = null, array $context = [])
     {
@@ -49,7 +49,7 @@ class FormErrorNormalizer implements NormalizerInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function supportsNormalization($data, $format = null)
     {

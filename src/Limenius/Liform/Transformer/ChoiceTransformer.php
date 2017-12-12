@@ -20,7 +20,7 @@ use Symfony\Component\Form\ChoiceList\View\ChoiceGroupView;
 class ChoiceTransformer extends AbstractTransformer
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function transform(FormInterface $form, array $extensions = [], $widget = null)
     {

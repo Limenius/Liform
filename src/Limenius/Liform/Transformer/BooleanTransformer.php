@@ -19,7 +19,7 @@ use Symfony\Component\Form\FormInterface;
 class BooleanTransformer extends AbstractTransformer
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function transform(FormInterface $form, array $extensions = [], $widget = null)
     {

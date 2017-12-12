@@ -22,7 +22,7 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 class FormViewNormalizer implements NormalizerInterface
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function normalize($object, $format = null, array $context = [])
     {
@@ -51,7 +51,7 @@ class FormViewNormalizer implements NormalizerInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function supportsNormalization($data, $format = null)
     {
