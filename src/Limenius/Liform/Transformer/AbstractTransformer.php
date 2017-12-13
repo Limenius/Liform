@@ -70,7 +70,6 @@ abstract class AbstractTransformer implements TransformerInterface
         $schema = $this->addLabel($form, $schema);
         $schema = $this->addAttr($form, $schema);
         $schema = $this->addPattern($form, $schema);
-        $schema = $this->addDefault($form, $schema);
         $schema = $this->addDescription($form, $schema);
         $schema = $this->addWidget($form, $schema, $widget);
         $schema = $this->applyExtensions($extensions, $form, $schema);
@@ -78,23 +77,6 @@ abstract class AbstractTransformer implements TransformerInterface
         return $schema;
     }
 
-
-    /**
-     * @param FormInterface $form
-     * @param array         $schema
-     *
-     * @return array
-     */
-    protected function addDefault(FormInterface $form, array $schema)
-    {
-        if ($attr = $form->getConfig()->getOption('attr')) {
-            if (isset($attr['placeholder'])) {
-                $schema['default'] = $attr['placeholder'];
-            }
-        }
-
-        return $schema;
-    }
 
     /**
      * @param FormInterface $form

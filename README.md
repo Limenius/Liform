@@ -60,7 +60,6 @@ And `$schema` will contain a JSON Schema representation such as:
          "attr":{  
             "placeholder":"444444"
          },
-         "default":"444444",
          "description":"3 hexadecimal digits",
          "propertyOrder":2
       },
@@ -250,48 +249,6 @@ class DummyType extends AbstractType
       "someText":{
          "type":"string",
          "title":"Some text",
-         "propertyOrder":1
-      }
-   },
-   "required":[
-      "someText"
-   ]
-}
-```
-
-### Placeholder/Default
-
-If the attribute `placeholder` of `attr` is provided, as in the following code: 
-
-```php
-class DummyType extends AbstractType
-{
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
-        $builder
-            ->add('someText', Type\TextType::class, [
-                'attr' => [
-                    'placeholder' => 'I am a placeholder',
-                ],
-            ]);
-    }
-}
-```
-
-It will be extracted as the `default` option. Note that, in addition, everything provided to `attr` will be preserved as well.
-
-```json
-{
-   "title":"dummy",
-   "type":"object",
-   "properties":{
-      "someText":{
-         "type":"string",
-         "title":"someText",
-         "attr":{
-            "placeholder":"I am a placeholder"
-         },
-         "default":"I am a placeholder",
          "propertyOrder":1
       }
    },
