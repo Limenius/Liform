@@ -41,25 +41,52 @@ class ChoiceTransformer extends AbstractTransformer
         }
 
         if ($formView->vars['multiple']) {
-            $schema = [
-                'items' => [
-                    'type' => 'string',
-                    'enum' => $choices,
-                    'liform' => ['enum_titles' => $titles],
-                    'minItems' => $this->isRequired($form) ? 1 : 0,
-                ],
-                'uniqueItems' => true,
-                'type' => 'array',
-            ];
+            $schema = $this->transformMultiple($form, $choices, $titles);
         } else {
-            $schema = [
-                'enum' => $choices,
-                'enum_titles' => $titles,
-                'type' => 'string',
-            ];
+            $schema = $this->transformSingle($form, $choices, $titles);
+
         }
 
         $schema = $this->addCommonSpecs($form, $schema, $extensions, $widget);
+
+        return $schema;
+    }
+
+    private function transformSingle(FormInterface $form, $choices, $titles)
+    {
+        $formView = $form->createView();
+
+        $schema = [
+            'enum' => $choices,
+            'enum_titles' => $titles,
+            'type' => 'string',
+        ];
+
+        if ($formView->vars['expanded']) {
+            $schema['widget'] = 'choice-expanded';
+        }
+
+        return $schema;
+    }
+
+    private function transformMultiple(FormInterface $form, $choices, $titles)
+    {
+        $formView = $form->createView();
+
+        $schema = [
+            'items' => [
+                'type' => 'string',
+                'enum' => $choices,
+                'liform' => ['enum_titles' => $titles],
+                'minItems' => $this->isRequired($form) ? 1 : 0,
+            ],
+            'uniqueItems' => true,
+            'type' => 'array',
+        ];
+
+        if ($formView->vars['expanded']) {
+            $schema['widget'] = 'choice-multiple-expanded';
+        }
 
         return $schema;
     }
