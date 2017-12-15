@@ -50,6 +50,14 @@ class Liform implements LiformInterface
     /**
      * {@inheritdoc}
      */
+    public function normalizeInitialValues(FormInterface $form)
+    {
+        return $this->initialValuesNormalizer->normalize($form);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function addExtension(ExtensionInterface $extension)
     {
         $this->extensions[] = $extension;

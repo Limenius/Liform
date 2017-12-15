@@ -27,6 +27,13 @@ interface LiformInterface
     public function transform(FormInterface $form);
 
     /**
+     * @param FormInterface $form
+     *
+     * @return array
+     */
+    public function normalizeInitialValues(FormInterface $form);
+
+    /**
      * @param ExtensionInterface $extension
      *
      * @return LiformInterface

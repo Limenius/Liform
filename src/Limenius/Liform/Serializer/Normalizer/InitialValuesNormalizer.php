@@ -11,6 +11,7 @@
 
 namespace Limenius\Liform\Serializer\Normalizer;
 
+use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
@@ -19,34 +20,40 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
  *
  * @author Nacho Martín <nacho@limenius.com>
  */
-class FormViewNormalizer implements NormalizerInterface
+class InitialValuesNormalizer implements NormalizerInterface
 {
     /**
      * {@inheritdoc}
      */
-    public function normalize($object, $format = null, array $context = [])
+    public function normalize($form, $format = null, array $context = [])
     {
-        if (!empty($object->children)) {
+        $formView = $form->createView();
+        return $this->getValues($form, $formView);
+    }
+
+    private function getValues(Form $form, FormView $formView)
+    {
+        if (!empty($formView->children)) {
             // Force serialization as {} instead of []
-            $form = (object) array();
-            foreach ($object->children as $name => $child) {
+            $data = (object) array();
+            foreach ($formView->children as $name => $child) {
                 // Skip empty values because
                 // https://github.com/erikras/redux-form/issues/2149
                 if (empty($child->children) && ($child->vars['value'] === null || $child->vars['value'] === '')) {
                     continue;
                 }
-                $form->{$name} = $this->normalize($child);
+                $data->{$name} = $this->getValues($form, $child);
             }
 
-            return $form;
+            return $data;
         } else {
             // handle separatedly the case with checkboxes, so the result is
             // true/false instead of 1/0
-            if (isset($object->vars['checked'])) {
-                return $object->vars['checked'];
+            if (isset($formView->vars['checked'])) {
+                return $formView->vars['checked'];
             }
 
-            return $object->vars['value'];
+            return $formView->vars['value'];
         }
     }
 
@@ -55,6 +62,6 @@ class FormViewNormalizer implements NormalizerInterface
      */
     public function supportsNormalization($data, $format = null)
     {
-        return $data instanceof FormView;
+        return $data instanceof Form;
     }
 }
