@@ -29,7 +29,16 @@ class InitialValuesNormalizer implements NormalizerInterface
     public function normalize($form, $format = null, array $context = [])
     {
         $formView = $form->createView();
+
         return $this->getValues($form, $formView);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function supportsNormalization($data, $format = null)
+    {
+        return $data instanceof Form;
     }
 
     private function getValues(Form $form, FormView $formView)
@@ -67,13 +76,6 @@ class InitialValuesNormalizer implements NormalizerInterface
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function supportsNormalization($data, $format = null)
-    {
-        return $data instanceof Form;
-    }
 
     private function normalizeMultipleExpandedChoice($formView)
     {
@@ -83,6 +85,7 @@ class InitialValuesNormalizer implements NormalizerInterface
                 $data[] = $child->vars['value'];
             }
         }
+
         return $data;
     }
 
@@ -93,6 +96,7 @@ class InitialValuesNormalizer implements NormalizerInterface
                 return $child->vars['value'];
             }
         }
+
         return null;
     }
 }

@@ -44,7 +44,6 @@ class ChoiceTransformer extends AbstractTransformer
             $schema = $this->transformMultiple($form, $choices, $titles);
         } else {
             $schema = $this->transformSingle($form, $choices, $titles);
-
         }
 
         $schema = $this->addCommonSpecs($form, $schema, $extensions, $widget);
