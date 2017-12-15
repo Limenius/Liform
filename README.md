@@ -144,7 +144,7 @@ $encoders = array(new XmlEncoder(), new JsonEncoder());
 $normalizers = array(new FormErrorNormalizer());
 
 $serializer = new Serializer($normalizers, $encoders);
-$initialValues = $serializer->normalize($form),
+$errors = $serializer->normalize($form),
 ```
 
 To obtain an array with the errors of your form. [liform-react](https://github.com/Limenius/liform-react), if you are using it, can understand this format.
