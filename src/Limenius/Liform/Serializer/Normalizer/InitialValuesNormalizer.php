@@ -14,6 +14,7 @@ namespace Limenius\Liform\Serializer\Normalizer;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use Limenius\Liform\FormUtil;
 
 /**
  * Normalize instances of FormView
@@ -34,6 +35,15 @@ class InitialValuesNormalizer implements NormalizerInterface
     private function getValues(Form $form, FormView $formView)
     {
         if (!empty($formView->children)) {
+            if (in_array('choice', FormUtil::typeAncestry($form)) &&
+                $formView->vars['expanded']
+            ) {
+                if ($formView->vars['multiple']) {
+                    return $this->normalizeMultipleExpandedChoice($formView);
+                } else {
+                    return $this->normalizeExpandedChoice($formView);
+                }
+            }
             // Force serialization as {} instead of []
             $data = (object) array();
             foreach ($formView->children as $name => $child) {
@@ -42,7 +52,7 @@ class InitialValuesNormalizer implements NormalizerInterface
                 if (empty($child->children) && ($child->vars['value'] === null || $child->vars['value'] === '')) {
                     continue;
                 }
-                $data->{$name} = $this->getValues($form, $child);
+                $data->{$name} = $this->getValues($form[$name], $child);
             }
 
             return $data;
@@ -63,5 +73,26 @@ class InitialValuesNormalizer implements NormalizerInterface
     public function supportsNormalization($data, $format = null)
     {
         return $data instanceof Form;
+    }
+
+    private function normalizeMultipleExpandedChoice($formView)
+    {
+        $data = array();
+        foreach ($formView->children as $name => $child) {
+            if ($child->vars['checked']) {
+                $data[] = $child->vars['value'];
+            }
+        }
+        return $data;
+    }
+
+    private function normalizeExpandedChoice($formView)
+    {
+        foreach ($formView->children as $name => $child) {
+            if ($child->vars['checked']) {
+                return $child->vars['value'];
+            }
+        }
+        return null;
     }
 }

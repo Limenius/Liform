@@ -122,7 +122,7 @@ $encoders = array(new XmlEncoder(), new JsonEncoder());
 $normalizers = array(new FormViewNormalizer());
 
 $serializer = new Serializer($normalizers, $encoders);
-$initialValues = $serializer->normalize($form->createView()),
+$initialValues = $serializer->normalize($form),
 ```
 
 To obtain an array of initial values that match your json-schema.
