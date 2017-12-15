@@ -34,9 +34,13 @@ Serializing a form into JSON Schema:
 ```php
 use Limenius\Liform\Resolver;
 use Limenius\Liform\Liform;
+use Limenius\Liform\Liform\Transformer;
 
 $resolver = new Resolver();
-$resolver->setDefaultTransformers();
+$resolver->setTransformer('text', Transformer\StringTransformer);
+$resolver->setTransformer('textarea', Transformer\StringTransformer, 'textarea');
+// more transformers you might need, for a complete list of what is used in Symfony
+// see https://github.com/Limenius/LiformBundle/blob/master/Resources/config/transformers.xml
 $liform = new Liform($resolver);
 
 $form = $this->createForm(CarType::class, $car, ['csrf_protection' => false]);
@@ -46,39 +50,39 @@ $schema = json_encode($liform->transform($form));
 And `$schema` will contain a JSON Schema representation such as:
 
 ```js
-{  
+{
    "title":null,
-   "properties":{  
-      "name":{  
+   "properties":{
+      "name":{
          "type":"string",
          "title":"Name",
          "propertyOrder":1
       },
-      "color":{  
+      "color":{
          "type":"string",
          "title":"Color",
-         "attr":{  
+         "attr":{
             "placeholder":"444444"
          },
          "description":"3 hexadecimal digits",
          "propertyOrder":2
       },
-      "drivers":{  
+      "drivers":{
          "type":"array",
          "title":"hola",
-         "items":{  
+         "items":{
             "title":"Drivers",
-            "properties":{  
-               "firstName":{  
+            "properties":{
+               "firstName":{
                   "type":"string",
                   "propertyOrder":1
                },
-               "familyName":{  
+               "familyName":{
                   "type":"string",
                   "propertyOrder":2
                }
             },
-            "required":[  
+            "required":[
                "firstName",
                "familyName"
             ],
@@ -87,7 +91,7 @@ And `$schema` will contain a JSON Schema representation such as:
          "propertyOrder":3
       }
    },
-   "required":[  
+   "required":[
       "name",
       "drivers"
    ]
@@ -113,7 +117,7 @@ $liform = new Liform($resolver);
 
 ## Serializing initial values
 
-This library provides a normalizer to serialize a `FormView` (you can create one with `$form->createView()`) into an array of initial values. 
+This library provides a normalizer to serialize a `FormView` (you can create one with `$form->createView()`) into an array of initial values.
 
 ```php
 use Limenius\Liform\Serializer\Normalizer\FormViewNormalizer;
@@ -149,7 +153,7 @@ To obtain an array with the errors of your form. [liform-react](https://github.c
 
 The goal of Liform is to extract as much data as possible from the form in order to have a complete representation with validation and UI hints in the schema. The options currently supported are.
 
-Some of the data can be extracted from the usual form attributes, however, some attributes will be provided using a special `liform` array that is passed to the form options. To do so in a comfortable way a [form extension](http://symfony.com/doc/current/form/create_form_type_extension.html) is provided. See [AddLiformExtension.php](https://github.com/Limenius/Liform/blob/master/src/Limenius/Liform/Form/Extension/AddLiformExtension.php) 
+Some of the data can be extracted from the usual form attributes, however, some attributes will be provided using a special `liform` array that is passed to the form options. To do so in a comfortable way a [form extension](http://symfony.com/doc/current/form/create_form_type_extension.html) is provided. See [AddLiformExtension.php](https://github.com/Limenius/Liform/blob/master/src/Limenius/Liform/Form/Extension/AddLiformExtension.php)
 
 ### Required
 
@@ -188,7 +192,7 @@ class DummyType extends AbstractType
 Sometimes you might want to render a field differently then the default behaviour for that type. By using the liform attributes you can specify a particular widget that determines how this field is rendered.
 
 
-If the attribute `widget` of `liform` is provided, as in the following code: 
+If the attribute `widget` of `liform` is provided, as in the following code:
 
 ```php
 class DummyType extends AbstractType
@@ -260,7 +264,7 @@ class DummyType extends AbstractType
 
 ### Pattern
 
-If the attribute `pattern` of `attr` is provided, as in the following code: 
+If the attribute `pattern` of `attr` is provided, as in the following code:
 
 ```php
 class DummyType extends AbstractType
@@ -303,7 +307,7 @@ It will be extracted as the `pattern` option, so it can be used for validation. 
 
 ### Description
 
-If the attribute `description` of `liform` is provided, as in the following code, it will be extracted in the schema: 
+If the attribute `description` of `liform` is provided, as in the following code, it will be extracted in the schema:
 
 ```php
 class DummyType extends AbstractType
