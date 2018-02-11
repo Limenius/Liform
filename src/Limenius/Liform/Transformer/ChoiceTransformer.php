@@ -28,15 +28,16 @@ class ChoiceTransformer extends AbstractTransformer
 
         $choices = [];
         $titles = [];
-        foreach ($formView->vars['choices'] as $choiceView) {
+        fforeach ($formView->vars['choices'] as $choiceView) {
+            $translationDomain = $form->getConfig()->getOption('choice_translation_domain');
             if ($choiceView instanceof ChoiceGroupView) {
                 foreach ($choiceView->choices as $choiceItem) {
                     $choices[] = $choiceItem->value;
-                    $titles[] = $this->translator->trans($choiceItem->label);
+                    $titles[] = $this->translator->trans($choiceItem->label, [], $translationDomain);
                 }
             } else {
                 $choices[] = $choiceView->value;
-                $titles[] = $this->translator->trans($choiceView->label);
+                $titles[] = $this->translator->trans($choiceView->label, [], $translationDomain);
             }
         }
 
