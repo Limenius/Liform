@@ -61,7 +61,12 @@ class InitialValuesNormalizer implements NormalizerInterface
                 if (empty($child->children) && ($child->vars['value'] === null || $child->vars['value'] === '')) {
                     continue;
                 }
-                $data->{$name} = $this->getValues($form[$name], $child);
+
+                // Avoid unknown field error when csrf_protection is true
+                // CSRF token should be extracted another way
+                if ($form->has($name)) {
+                    $data->{$name} = $this->getValues($form->get($name), $child);
+                }
             }
 
             return $data;
