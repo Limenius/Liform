@@ -58,6 +58,14 @@ class StringTransformer extends AbstractTransformer
      */
     protected function addMinLength(FormInterface $form, array $schema)
     {
+        if ($attr = $form->getConfig()->getOption('attr')) {
+            if (isset($attr['minlength'])) {
+                $schema['minLength'] = $attr['minlength'];
+                
+                return $schema;
+            }
+        }
+        
         if (null === $this->validatorGuesser) {
             return $schema;
         }
