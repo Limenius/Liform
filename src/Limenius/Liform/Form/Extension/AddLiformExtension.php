@@ -33,9 +33,11 @@ class AddLiformExtension extends AbstractTypeExtension
     }
 
     /**
-     * {@inheritdoc}
+     * Gets the extended types.
+     *
+     * @return iterable
      */
-    public static function getExtendedTypes(): iterable
+    public static function getExtendedTypes()
     {
         return [FormType::class];
     }
