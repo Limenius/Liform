@@ -33,6 +33,14 @@ class AddLiformExtension extends AbstractTypeExtension
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public static function getExtendedTypes(): iterable
+    {
+        return [FormType::class];
+    }
+
+    /**
      * Add the liform option
      *
      * @param OptionsResolver $resolver
