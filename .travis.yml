@@ -18,4 +18,4 @@ install:
 
 script:
     - ./vendor/bin/phpcs --standard=ruleset.xml -p -n
-    - phpunit
+    - ./vendor/bin/phpunit
