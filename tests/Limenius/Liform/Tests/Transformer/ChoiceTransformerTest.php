@@ -49,7 +49,9 @@ class ChoiceTransformerTest extends LiformTestCase
         $transformed = $transformer->transform($form);
         $this->assertTrue(is_array($transformed));
         $this->assertArrayHasKey('enum_titles', $transformed['properties']['firstName']);
+        $this->assertArrayHasKey('enum_titles', $transformed['properties']['firstName']['options']);
         $this->assertEquals(['a-translated', 'b-translated'], $transformed['properties']['firstName']['enum_titles']);
+        $this->assertEquals(['a-translated', 'b-translated'], $transformed['properties']['firstName']['options']['enum_titles']);
         $this->assertArrayHasKey('enum', $transformed['properties']['firstName']);
         $this->assertEquals(['A', 'B'], $transformed['properties']['firstName']['enum']);
     }
@@ -79,7 +81,9 @@ class ChoiceTransformerTest extends LiformTestCase
         $transformed = $transformer->transform($form);
         $this->assertTrue(is_array($transformed));
         $this->assertArrayHasKey('enum_titles', $transformed['properties']['firstName']);
+        $this->assertArrayHasKey('enum_titles', $transformed['properties']['firstName']['options']);
         $this->assertEquals(['a-translated', 'b-translated'], $transformed['properties']['firstName']['enum_titles']);
+        $this->assertEquals(['a-translated', 'b-translated'], $transformed['properties']['firstName']['options']['enum_titles']);
         $this->assertArrayHasKey('enum', $transformed['properties']['firstName']);
         $this->assertEquals(['A', 'B'], $transformed['properties']['firstName']['enum']);
         $this->assertArrayHasKey('widget', $transformed['properties']['firstName']);
