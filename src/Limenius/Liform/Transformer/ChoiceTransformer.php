@@ -57,7 +57,10 @@ class ChoiceTransformer extends AbstractTransformer
 
         $schema = [
             'enum' => $choices,
-            'enum_titles' => $titles,
+            'enum_titles' => $titles, // For backwards compatibility
+            'options' => [
+                'enum_titles' => $titles,
+            ],
             'type' => 'string',
         ];
 
@@ -76,7 +79,10 @@ class ChoiceTransformer extends AbstractTransformer
             'items' => [
                 'type' => 'string',
                 'enum' => $choices,
-                'enum_titles' => $titles,
+                'enum_titles' => $titles, // For backwards compatibility
+                'options' => [
+                    'enum_titles' => $titles,
+                ],
             ],
             'minItems' => $this->isRequired($form) ? 1 : 0,
             'uniqueItems' => true,

@@ -1,44 +1,46 @@
 {
-    "name": "limenius/liform",
-    "description": "Library to transform Symfony Forms into Json Schema",
-    "type": "library",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Nacho Martín",
-            "email": "nacho@limenius.com"
-        }
-    ],
-    "autoload": {
-        "psr-4": { "Limenius\\Liform\\": "src/Limenius/Liform" }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Limenius\\Liform\\Tests\\": "tests/Limenius/Liform/Tests"
-        }
-    },
-    "require": {
-      "php": "^7.2.5",
-      "symfony/form": "^4.4|^5.0",
-      "symfony/translation": "^4.4|^5.0",
-      "symfony/serializer": "^4.4|^5.0",
-      "symfony/contracts": "^1.0|^2.1"
-    },
-    "require-dev": {
-        "squizlabs/php_codesniffer": "^3.5",
-        "escapestudios/symfony2-coding-standard": "^3.0",
-        "phpunit/phpunit": "^8.0",
-        "phpcompatibility/php-compatibility": "^9.3",
-        "dealerdirect/phpcodesniffer-composer-installer": "^0.6.2"
-    },
-    "scripts": {
-        "post-install-cmd": [
-            "@default-scripts"
-        ],
-        "post-update-cmd": [
-            "@default-scripts"
-        ],
-        "test": "phpunit",
-        "cs": "phpcs --standard=ruleset.xml -p"
+  "name": "limenius/liform",
+  "description": "Library to transform Symfony Forms into Json Schema",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Nacho Martín",
+      "email": "nacho@limenius.com"
     }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Limenius\\Liform\\": "src/Limenius/Liform"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Limenius\\Liform\\Tests\\": "tests/Limenius/Liform/Tests"
+    }
+  },
+  "require": {
+    "php": "^7.2.5",
+    "symfony/form": "^4.4|^5.0",
+    "symfony/translation": "^4.4|^5.0",
+    "symfony/serializer": "^4.4|^5.0",
+    "symfony/contracts": "^1.0|^2.1"
+  },
+  "require-dev": {
+    "squizlabs/php_codesniffer": "^3.5",
+    "escapestudios/symfony2-coding-standard": "^3.0",
+    "phpunit/phpunit": "^8.0",
+    "phpcompatibility/php-compatibility": "^9.3",
+    "dealerdirect/phpcodesniffer-composer-installer": "^0.6.2"
+  },
+  "scripts": {
+    "post-install-cmd": [
+      "@default-scripts"
+    ],
+    "post-update-cmd": [
+      "@default-scripts"
+    ],
+    "test": "vendor/bin/phpunit",
+    "cs": "phpcs --standard=ruleset.xml -p"
+  }
 }
