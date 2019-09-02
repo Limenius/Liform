@@ -27,20 +27,13 @@
     "symfony/contracts": "^1.0|^2.1"
   },
   "require-dev": {
-    "squizlabs/php_codesniffer": "^3.5",
+    "dealerdirect/phpcodesniffer-composer-installer": "^0.6.2",
     "escapestudios/symfony2-coding-standard": "^3.0",
     "phpunit/phpunit": "^8.0",
-    "phpcompatibility/php-compatibility": "^9.3",
-    "dealerdirect/phpcodesniffer-composer-installer": "^0.6.2"
+    "phpcompatibility/php-compatibility": "^9.3"
   },
   "scripts": {
-    "post-install-cmd": [
-      "@default-scripts"
-    ],
-    "post-update-cmd": [
-      "@default-scripts"
-    ],
-    "test": "vendor/bin/phpunit",
-    "cs": "phpcs --standard=ruleset.xml -p"
+    "test": "phpunit",
+    "cs": "phpcs"
   }
 }

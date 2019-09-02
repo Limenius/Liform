@@ -6,7 +6,10 @@
     <exclude-pattern>Resources/</exclude-pattern>
     <exclude-pattern>tests/</exclude-pattern>
 
-    <config name="testVersion" value="5.5-7.0"/>
+    <rule ref="Symfony2"/>
+    <rule ref="PHPCompatibility" />
+
+    <config name="testVersion" value="5.5-"/>
 
     <rule ref="PEAR.Functions.ValidDefaultValue.NotAtEnd">
         <severity>0</severity>
