@@ -69,7 +69,7 @@ class InitialValuesNormalizer implements NormalizerInterface
                 }
             }
 
-            return $data;
+            return (array)$data;
         } else {
             // handle separatedly the case with checkboxes, so the result is
             // true/false instead of 1/0
