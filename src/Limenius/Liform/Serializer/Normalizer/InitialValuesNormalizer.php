@@ -56,12 +56,6 @@ class InitialValuesNormalizer implements NormalizerInterface
             // Force serialization as {} instead of []
             $data = (object) array();
             foreach ($formView->children as $name => $child) {
-                // Skip empty values because
-                // https://github.com/erikras/redux-form/issues/2149
-                if (empty($child->children) && ($child->vars['value'] === null || $child->vars['value'] === '')) {
-                    continue;
-                }
-
                 // Avoid unknown field error when csrf_protection is true
                 // CSRF token should be extracted another way
                 if ($form->has($name)) {
