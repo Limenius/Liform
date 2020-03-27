@@ -37,7 +37,7 @@ class AddLiformExtension extends AbstractTypeExtension
      *
      * @return iterable
      */
-    public static function getExtendedTypes()
+    public static function getExtendedTypes(): iterable
     {
         return [FormType::class];
     }
