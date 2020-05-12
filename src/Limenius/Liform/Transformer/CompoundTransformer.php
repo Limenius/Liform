@@ -15,7 +15,7 @@ use Limenius\Liform\FormUtil;
 use Limenius\Liform\ResolverInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormTypeGuesserInterface;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @author Nacho Martín <nacho@limenius.com>
