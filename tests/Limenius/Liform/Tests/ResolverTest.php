@@ -11,12 +11,11 @@
 
 namespace Limenius\Liform\Tests;
 
-use Limenius\Liform\Resolver;
 use Limenius\Liform\Exception\TransformerException;
+use Limenius\Liform\Resolver;
 use Limenius\Liform\Transformer\StringTransformer;
-use Symfony\Component\Form\Test\TypeTestCase;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\FormType;
+use Symfony\Component\Form\Test\TypeTestCase;
 
 /**
  * @author Nacho Martín <nacho@limenius.com>
@@ -31,11 +30,10 @@ class ResolverTest extends TypeTestCase
         $this->assertInstanceOf(Resolver::class, $resolver);
     }
 
-    /**
-     * @expectedException \Limenius\Liform\Exception\TransformerException
-     */
     public function testCannotResolve()
     {
+        $this->expectException(TransformerException::class);
+
         $resolver = new Resolver();
         $form = $this->factory->create(TextType::class);
         $this->assertArrayHasKey('transformer', $resolver->resolve($form));
