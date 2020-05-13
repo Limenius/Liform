@@ -26,6 +26,11 @@ in the *installation chapter* of the Composer documentation.
 
 > Liform follows the PSR-4 convention names for its classes, which means you can easily integrate `Liform` classes loading in your own autoloader.
 
+#### Note
+`symfony/form ^5.0` broke backwards compatibility on some abstract functions we use. If you need to function with
+earlier versions, you need to use Liform v0.15 or earlier:
+
+    $ composer require limenius/liform "^0.15"
 
 ## Usage
 

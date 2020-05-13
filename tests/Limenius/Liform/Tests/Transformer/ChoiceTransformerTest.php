@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Limenius\Liform\Tests\Liform\Transformer;
+namespace Limenius\Liform\Tests\Transformer;
 
 use Symfony\Component\Form\Extension\Core\Type;
 use Symfony\Component\Form\Extension\Core\Type\FormType;

@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Limenius\Liform\Tests\Normalizer;
+namespace Limenius\Liform\Tests\Serializer;
 
 use Limenius\Liform\Serializer\Normalizer\InitialValuesNormalizer;
 use Limenius\Liform\Tests\LiformTestCase;

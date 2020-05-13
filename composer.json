@@ -18,19 +18,20 @@
         }
     },
     "require": {
-      "symfony/form": "~2.8|~3.0|^4.0",
-      "symfony/translation": "~2.3|~3.0|^4.0",
-      "symfony/serializer": "~2.8|~3.0|^4.0"
+      "php": "^7.2.5",
+      "symfony/form": "^5.0",
+      "symfony/translation": "^5.0",
+      "symfony/serializer": "^5.0",
+      "symfony/contracts": "^2.1"
     },
     "require-dev": {
-        "squizlabs/php_codesniffer": "^2.5",
-        "escapestudios/symfony2-coding-standard": "^2.9",
-        "wimg/php-compatibility": "^7.0"
+        "squizlabs/php_codesniffer": "^3.5",
+        "escapestudios/symfony2-coding-standard": "^3.0",
+        "phpunit/phpunit": "^8.0",
+        "phpcompatibility/php-compatibility": "^9.3",
+        "dealerdirect/phpcodesniffer-composer-installer": "^0.6.2"
     },
     "scripts": {
-        "default-scripts": [
-            "rm -rf vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/PHPCompatibility; cp -rp vendor/wimg/php-compatibility vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/PHPCompatibility"
-        ],
         "post-install-cmd": [
             "@default-scripts"
         ],
