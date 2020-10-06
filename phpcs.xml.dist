@@ -6,7 +6,7 @@
     <exclude-pattern>Resources/</exclude-pattern>
     <exclude-pattern>tests/</exclude-pattern>
 
-    <rule ref="Symfony2"/>
+    <rule ref="Symfony"/>
     <rule ref="PHPCompatibility" />
 
     <config name="testVersion" value="5.5-"/>
