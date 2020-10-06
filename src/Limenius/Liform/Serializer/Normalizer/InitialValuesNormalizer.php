@@ -76,7 +76,7 @@ class InitialValuesNormalizer implements NormalizerInterface
     }
 
 
-    private function normalizeMultipleExpandedChoice($formView)
+    private function normalizeMultipleExpandedChoice(FormView $formView)
     {
         $data = array();
         foreach ($formView->children as $name => $child) {
@@ -88,7 +88,7 @@ class InitialValuesNormalizer implements NormalizerInterface
         return $data;
     }
 
-    private function normalizeExpandedChoice($formView)
+    private function normalizeExpandedChoice(FormView $formView)
     {
         foreach ($formView->children as $name => $child) {
             if ($child->vars['checked']) {

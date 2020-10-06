@@ -24,7 +24,7 @@ class ValidatorGuesser extends ValidatorTypeGuesser
     /**
      * {@inheritdoc}
      */
-    public function guessMinLength($class, $property)
+    public function guessMinLength(string $class, string $property)
     {
         return $this->guess($class, $property, function (Constraint $constraint) {
             return $this->guessMinLengthForConstraint($constraint);

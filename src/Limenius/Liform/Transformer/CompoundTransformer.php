@@ -11,7 +11,6 @@
 
 namespace Limenius\Liform\Transformer;
 
-use Limenius\Liform\FormUtil;
 use Limenius\Liform\ResolverInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormTypeGuesserInterface;
