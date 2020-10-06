@@ -9,7 +9,7 @@
     <rule ref="Symfony"/>
     <rule ref="PHPCompatibility" />
 
-    <config name="testVersion" value="5.5-"/>
+    <config name="testVersion" value="7.2-"/>
 
     <rule ref="PEAR.Functions.ValidDefaultValue.NotAtEnd">
         <severity>0</severity>

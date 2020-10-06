@@ -41,6 +41,13 @@ class InitialValuesNormalizer implements NormalizerInterface
         return $data instanceof Form;
     }
 
+    /**
+     * Gets the values of the form
+     * @param Form     $form
+     * @param FormView $formView
+     *
+     * @return mixed
+     */
     private function getValues(Form $form, FormView $formView)
     {
         if (!empty($formView->children)) {
@@ -63,7 +70,7 @@ class InitialValuesNormalizer implements NormalizerInterface
                 }
             }
 
-            return (array)$data;
+            return (array) $data;
         } else {
             // handle separatedly the case with checkboxes, so the result is
             // true/false instead of 1/0
@@ -75,7 +82,12 @@ class InitialValuesNormalizer implements NormalizerInterface
         }
     }
 
-
+    /**
+     * Normalize when choice is multiple
+     * @param FormView $formView
+     *
+     * @return array
+     */
     private function normalizeMultipleExpandedChoice(FormView $formView)
     {
         $data = array();
@@ -88,6 +100,12 @@ class InitialValuesNormalizer implements NormalizerInterface
         return $data;
     }
 
+    /**
+     * Normalize when choice is expanded
+     * @param FormView $formView
+     *
+     * @return mixed
+     */
     private function normalizeExpandedChoice(FormView $formView)
     {
         foreach ($formView->children as $name => $child) {

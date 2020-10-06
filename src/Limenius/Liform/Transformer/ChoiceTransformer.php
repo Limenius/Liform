@@ -51,6 +51,13 @@ class ChoiceTransformer extends AbstractTransformer
         return $schema;
     }
 
+    /**
+     * @param FormInterface $form
+     * @param array         $choices
+     * @param array         $titles
+     *
+     * @return array
+     */
     private function transformSingle(FormInterface $form, $choices, $titles)
     {
         $formView = $form->createView();
@@ -71,6 +78,13 @@ class ChoiceTransformer extends AbstractTransformer
         return $schema;
     }
 
+    /**
+     * @param FormInterface $form
+     * @param array         $choices
+     * @param array         $titles
+     *
+     * @return array
+     */
     private function transformMultiple(FormInterface $form, $choices, $titles)
     {
         $formView = $form->createView();

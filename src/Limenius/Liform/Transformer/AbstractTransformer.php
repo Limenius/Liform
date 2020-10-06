@@ -41,6 +41,16 @@ abstract class AbstractTransformer implements TransformerInterface
     }
 
     /**
+     * @param FormInterface $form
+     *
+     * @return boolean
+     */
+    public function isRequired(FormInterface $form)
+    {
+        return $form->getConfig()->getOption('required');
+    }
+
+    /**
      * @param ExtensionInterface[] $extensions
      * @param FormInterface        $form
      * @param array                $schema
@@ -168,15 +178,5 @@ abstract class AbstractTransformer implements TransformerInterface
         }
 
         return $schema;
-    }
-
-    /**
-     * @param FormInterface $form
-     *
-     * @return boolean
-     */
-    public function isRequired(FormInterface $form)
-    {
-        return $form->getConfig()->getOption('required');
     }
 }

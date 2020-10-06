@@ -32,11 +32,8 @@ class ArrayTransformer extends AbstractTransformer
      * @param FormTypeGuesserInterface|null $validatorGuesser
      * @param ResolverInterface             $resolver
      */
-    public function __construct(
-        TranslatorInterface $translator,
-        FormTypeGuesserInterface $validatorGuesser = null,
-        ResolverInterface $resolver
-    ) {
+    public function __construct(TranslatorInterface $translator, FormTypeGuesserInterface $validatorGuesser = null, ResolverInterface $resolver)
+    {
         parent::__construct($translator, $validatorGuesser);
         $this->resolver = $resolver;
     }
@@ -62,7 +59,7 @@ class ArrayTransformer extends AbstractTransformer
             $entryType = $form->getConfig()->getAttribute('prototype');
 
             if (!$entryType) {
-                throw new TransformerException('Liform cannot infer the json-schema representation of a an empty Collection or array-like type without the option "allow_add" (to check the proptotype). Evaluating "'.$form->getName().'"');
+                throw new TransformerException(sprintf('Liform cannot infer the json-schema representation of a an empty Collection or array-like type without the option "allow_add" (to check the proptotype). Evaluating "%s', $form->getName()));
             }
 
             $transformerData = $this->resolver->resolve($entryType);

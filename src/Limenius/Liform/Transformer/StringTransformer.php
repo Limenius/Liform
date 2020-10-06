@@ -12,7 +12,6 @@
 namespace Limenius\Liform\Transformer;
 
 use Limenius\Liform\FormUtil;
-use Limenius\Liform\Guesser\ValidatorGuesser;
 use Symfony\Component\Form\FormInterface;
 
 /**
@@ -61,11 +60,11 @@ class StringTransformer extends AbstractTransformer
         if ($attr = $form->getConfig()->getOption('attr')) {
             if (isset($attr['minlength'])) {
                 $schema['minLength'] = $attr['minlength'];
-                
+
                 return $schema;
             }
         }
-        
+
         if (null === $this->validatorGuesser) {
             return $schema;
         }
