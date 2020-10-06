@@ -136,9 +136,10 @@ abstract class AbstractTransformer implements TransformerInterface
      */
     protected function addDescription(FormInterface $form, array $schema)
     {
+        $translationDomain = $form->getConfig()->getOption('translation_domain');
         if ($liform = $form->getConfig()->getOption('liform')) {
             if (isset($liform['description']) && $description = $liform['description']) {
-                $schema['description'] = $this->translator->trans($description);
+                $schema['description'] = $this->translator->trans($description, [], $translationDomain);
             }
         }
 
