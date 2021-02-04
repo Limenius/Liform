@@ -80,6 +80,7 @@ abstract class AbstractTransformer implements TransformerInterface
         $schema = $this->addLabel($form, $schema);
         $schema = $this->addAttr($form, $schema);
         $schema = $this->addPattern($form, $schema);
+        $schema = $this->addDisabled($form, $schema);
         $schema = $this->addDescription($form, $schema);
         $schema = $this->addWidget($form, $schema, $widget);
         $schema = $this->applyExtensions($extensions, $form, $schema);
@@ -87,6 +88,20 @@ abstract class AbstractTransformer implements TransformerInterface
         return $schema;
     }
 
+    /**
+     * @param FormInterface $form
+     * @param array         $schema
+     *
+     * @return array
+     */
+    protected function addDisabled(FormInterface $form, array $schema)
+    {
+        if ($form->getConfig()->getOption('disabled')) {
+            $schema['disabled'] = true;
+        }
+
+        return $schema;
+    }
 
     /**
      * @param FormInterface $form
