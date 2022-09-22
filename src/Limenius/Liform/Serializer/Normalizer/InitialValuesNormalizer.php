@@ -12,6 +12,7 @@
 namespace Limenius\Liform\Serializer\Normalizer;
 
 use Symfony\Component\Form\Form;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Limenius\Liform\FormUtil;
@@ -43,12 +44,12 @@ class InitialValuesNormalizer implements NormalizerInterface
 
     /**
      * Gets the values of the form
-     * @param Form     $form
-     * @param FormView $formView
+     * @param Form|FormInterface     $form
+     * @param FormView               $formView
      *
      * @return mixed
      */
-    private function getValues(Form $form, FormView $formView)
+    private function getValues(FormInterface $form, FormView $formView)
     {
         if (!empty($formView->children)) {
             if (in_array('choice', FormUtil::typeAncestry($form)) &&
@@ -56,9 +57,9 @@ class InitialValuesNormalizer implements NormalizerInterface
             ) {
                 if ($formView->vars['multiple']) {
                     return $this->normalizeMultipleExpandedChoice($formView);
-                } else {
-                    return $this->normalizeExpandedChoice($formView);
                 }
+
+                return $this->normalizeExpandedChoice($formView);
             }
             // Force serialization as {} instead of []
             $data = (object) array();
@@ -71,15 +72,15 @@ class InitialValuesNormalizer implements NormalizerInterface
             }
 
             return (array) $data;
-        } else {
-            // handle separatedly the case with checkboxes, so the result is
-            // true/false instead of 1/0
-            if (isset($formView->vars['checked'])) {
-                return $formView->vars['checked'];
-            }
-
-            return $formView->vars['value'];
         }
+
+        // handle separatedly the case with checkboxes, so the result is
+        // true/false instead of 1/0
+        if (isset($formView->vars['checked'])) {
+            return $formView->vars['checked'];
+        }
+
+        return $formView->vars['value'];
     }
 
     /**

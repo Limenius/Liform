@@ -1,0 +1,6 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Method Limenius\\\\Liform\\\\Resolver\\:\\:resolve\\(\\) should return array but returns Limenius\\\\Liform\\\\Transformer\\\\TransformerInterface\\.$#"
+			count: 1
+			path: src/Limenius/Liform/Resolver.php

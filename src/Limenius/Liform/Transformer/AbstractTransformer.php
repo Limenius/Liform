@@ -34,7 +34,7 @@ abstract class AbstractTransformer implements TransformerInterface
      * @param TranslatorInterface           $translator
      * @param FormTypeGuesserInterface|null $validatorGuesser
      */
-    public function __construct(TranslatorInterface $translator, FormTypeGuesserInterface $validatorGuesser = null)
+    public function __construct(TranslatorInterface $translator, ?FormTypeGuesserInterface $validatorGuesser = null)
     {
         $this->translator = $translator;
         $this->validatorGuesser = $validatorGuesser;
@@ -75,7 +75,7 @@ abstract class AbstractTransformer implements TransformerInterface
      *
      * @return array
      */
-    protected function addCommonSpecs(FormInterface $form, array $schema, $extensions = [], $widget)
+    protected function addCommonSpecs(FormInterface $form, array $schema, array $extensions = [], $widget = null)
     {
         $schema = $this->addLabel($form, $schema);
         $schema = $this->addAttr($form, $schema);
