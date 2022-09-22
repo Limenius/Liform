@@ -1,5 +1,5 @@
 {
-  "name": "limenius/liform",
+  "name": "answear/liform",
   "description": "Library to transform Symfony Forms into Json Schema",
   "type": "library",
   "license": "MIT",
@@ -31,6 +31,9 @@
     "escapestudios/symfony2-coding-standard": "^3.0",
     "phpunit/phpunit": "^8.0",
     "phpcompatibility/php-compatibility": "^9.3"
+  },
+  "replace": {
+    "limenius/liform": "*"
   },
   "scripts": {
     "test": "phpunit",
