@@ -24,7 +24,6 @@
         "symfony/form": "^5.4|^6.0",
         "symfony/translation": "^5.4|^6.0",
         "symfony/serializer": "^5.4|^6.0",
-        "symfony/contracts": "^v2.3.1|^v3.0.2",
         "symfony/validator": "^5.4|^6.0"
     },
     "require-dev": {
