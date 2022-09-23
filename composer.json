@@ -1,49 +1,49 @@
 {
-  "name": "answear/liform",
-  "description": "Library to transform Symfony Forms into Json Schema",
-  "type": "library",
-  "license": "MIT",
-  "authors": [
-    {
-      "name": "Nacho Martín",
-      "email": "nacho@limenius.com"
+    "name": "answear/liform",
+    "description": "Library to transform Symfony Forms into Json Schema",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Nacho Martín",
+            "email": "nacho@limenius.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Limenius\\Liform\\": "src/Limenius/Liform"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Limenius\\Liform\\Tests\\": "tests/Limenius/Liform/Tests"
+        }
+    },
+    "require": {
+        "php": "^7.4|^8.0",
+        "symfony/form": "^5.4|^6.0",
+        "symfony/translation": "^5.4|^6.0",
+        "symfony/serializer": "^5.4|^6.0",
+        "symfony/contracts": "^v2.3.1|^v3.0.2",
+        "symfony/validator": "^5.4|^6.0"
+    },
+    "require-dev": {
+        "dealerdirect/phpcodesniffer-composer-installer": "^v0.7.2",
+        "escapestudios/symfony2-coding-standard": "^3.0",
+        "phpunit/phpunit": "^8.0",
+        "phpcompatibility/php-compatibility": "^9.3",
+        "phpstan/phpstan": "^1.8"
+    },
+    "replace": {
+        "limenius/liform": "*"
+    },
+    "scripts": {
+        "test": "phpunit",
+        "cs": "phpcs"
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
     }
-  ],
-  "autoload": {
-    "psr-4": {
-      "Limenius\\Liform\\": "src/Limenius/Liform"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "Limenius\\Liform\\Tests\\": "tests/Limenius/Liform/Tests"
-    }
-  },
-  "require": {
-    "php": "^7.4|^8.0",
-    "symfony/form": "^5.4|^6.0",
-    "symfony/translation": "^5.4|^6.0",
-    "symfony/serializer": "^5.4|^6.0",
-    "symfony/contracts": "^v2.3.1",
-    "symfony/validator": "^5.4|^6.0"
-  },
-  "require-dev": {
-    "dealerdirect/phpcodesniffer-composer-installer": "^v0.7.2",
-    "escapestudios/symfony2-coding-standard": "^3.0",
-    "phpunit/phpunit": "^8.0",
-    "phpcompatibility/php-compatibility": "^9.3",
-    "phpstan/phpstan": "^1.8"
-  },
-  "replace": {
-    "limenius/liform": "*"
-  },
-  "scripts": {
-    "test": "phpunit",
-    "cs": "phpcs"
-  },
-  "config": {
-    "allow-plugins": {
-      "dealerdirect/phpcodesniffer-composer-installer": true
-    }
-  }
 }
