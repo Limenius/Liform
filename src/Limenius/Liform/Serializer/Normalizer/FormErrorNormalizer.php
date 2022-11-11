@@ -15,6 +15,7 @@ use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface as TranslatorContract;
 
 /**
  * Normalizes invalid Form instances.
@@ -96,7 +97,11 @@ class FormErrorNormalizer implements NormalizerInterface
     private function getErrorMessage(FormError $error)
     {
         if (null !== $error->getMessagePluralization()) {
-            return $this->translator->transChoice($error->getMessageTemplate(), $error->getMessagePluralization(), $error->getMessageParameters(), 'validators');
+            if ($this->translator instanceof TranslatorContract) {
+                return $this->translator->trans($error->getMessageTemplate(), ['%count%' => $error->getMessagePluralization()] + $error->getMessageParameters(), 'validators');
+            } else {
+                return $this->translator->transChoice($error->getMessageTemplate(), $error->getMessagePluralization(), $error->getMessageParameters(), 'validators');
+            }
         }
 
         return $this->translator->trans($error->getMessageTemplate(), $error->getMessageParameters(), 'validators');
