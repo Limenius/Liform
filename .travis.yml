@@ -3,22 +3,22 @@ language: php
 sudo: false
 
 cache:
-    directories:
-        - $HOME/.composer/cache/files
+  directories:
+    - $HOME/.composer/cache/files
 
 php:
-    - 7.2
-    - 7.3
-    - 7.4
-    - 8.0
+  - 7.4
+  - 8.0
+  - 8.1
+  - 8.2
 
 before_install:
-    - composer self-update
-    - if [ "$DEPENDENCIES" = "dev" ]; then perl -pi -e 's/^}$/,"minimum-stability":"dev"}/' composer.json; fi;
+  - composer self-update
+  - if [ "$DEPENDENCIES" = "dev" ]; then perl -pi -e 's/^}$/,"minimum-stability":"dev"}/' composer.json; fi;
 
 install:
-    - composer update $COMPOSER_FLAGS
+  - composer update $COMPOSER_FLAGS
 
 script:
-    - ./vendor/bin/phpcs -n
-    - phpunit
+  - ./vendor/bin/phpcs -n
+  - phpunit

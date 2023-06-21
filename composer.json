@@ -20,20 +20,26 @@
     }
   },
   "require": {
-    "php": "^7.2.5|^8.0",
-    "symfony/form": "^4.4|^5.0",
-    "symfony/translation": "^4.4|^5.0",
-    "symfony/serializer": "^4.4|^5.0",
-    "symfony/contracts": "^1.0|^2.1"
+    "php": "^7.4|^8.0",
+    "symfony/form": "^5.4|^6.0",
+    "symfony/translation": "^5.4|^6.0",
+    "symfony/serializer": "^5.4|^6.0",
+    "symfony/validator": "^5.4|^6.0"
   },
   "require-dev": {
-    "dealerdirect/phpcodesniffer-composer-installer": "^v0.7.1",
+    "dealerdirect/phpcodesniffer-composer-installer": "^v0.7.2",
     "escapestudios/symfony2-coding-standard": "^3.0",
     "phpunit/phpunit": "^8.0",
-    "phpcompatibility/php-compatibility": "^9.3"
+    "phpcompatibility/php-compatibility": "^9.3",
+    "phpstan/phpstan": "^1.8"
   },
   "scripts": {
     "test": "phpunit",
     "cs": "phpcs"
+  },
+  "config": {
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true
+    }
   }
 }
