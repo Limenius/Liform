@@ -26,7 +26,7 @@ class InitialValuesNormalizer implements NormalizerInterface
     /**
      * {@inheritdoc}
      */
-    public function normalize($form, $format = null, array $context = [])
+    public function normalize($form, $format = null, array $context = []): float|array|\ArrayObject|bool|int|string|null
     {
         $formView = $form->createView();
 
@@ -35,8 +35,11 @@ class InitialValuesNormalizer implements NormalizerInterface
 
     /**
      * {@inheritdoc}
+     * @param mixed $data
+     * @param null $format
+     * @param array $context
      */
-    public function supportsNormalization($data, $format = null)
+    public function supportsNormalization($data, $format = null, array $context = []): bool
     {
         return $data instanceof Form;
     }
@@ -48,7 +51,7 @@ class InitialValuesNormalizer implements NormalizerInterface
      *
      * @return mixed
      */
-    private function getValues(Form $form, FormView $formView)
+    private function getValues(Form $form, FormView $formView): mixed
     {
         if (!empty($formView->children)) {
             if (in_array('choice', FormUtil::typeAncestry($form)) &&
@@ -88,7 +91,7 @@ class InitialValuesNormalizer implements NormalizerInterface
      *
      * @return array
      */
-    private function normalizeMultipleExpandedChoice(FormView $formView)
+    private function normalizeMultipleExpandedChoice(FormView $formView): array
     {
         $data = array();
         foreach ($formView->children as $name => $child) {
@@ -106,7 +109,7 @@ class InitialValuesNormalizer implements NormalizerInterface
      *
      * @return mixed
      */
-    private function normalizeExpandedChoice(FormView $formView)
+    private function normalizeExpandedChoice(FormView $formView): mixed
     {
         foreach ($formView->children as $name => $child) {
             if ($child->vars['checked']) {
@@ -115,5 +118,10 @@ class InitialValuesNormalizer implements NormalizerInterface
         }
 
         return null;
+    }
+
+    public function getSupportedTypes(?string $format): array
+    {
+        return [Form::class];
     }
 }

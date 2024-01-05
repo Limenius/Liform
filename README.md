@@ -29,8 +29,9 @@ in the *installation chapter* of the Composer documentation.
 #### Note
 `symfony/form ^5.0` broke backwards compatibility on some abstract functions we use. If you need to function with
 earlier versions, you need to use Liform v0.15 or earlier:
-
-    $ composer require limenius/liform "^0.15"
+```bash
+composer require limenius/liform "^0.15"
+```
 
 ## Usage
 
@@ -54,7 +55,7 @@ $schema = json_encode($liform->transform($form));
 
 And `$schema` will contain a JSON Schema representation such as:
 
-```js
+```json
 {
    "title":null,
    "properties":{
@@ -354,6 +355,6 @@ This library is under the MIT license. See the complete license in the file:
 
     LICENSE.md
 
-## Acknoledgements
+## Acknowledgements
 
 The technique for transforming forms using resolvers and reducers is inspired on [Symfony Console Form](https://github.com/matthiasnoback/symfony-console-form)
