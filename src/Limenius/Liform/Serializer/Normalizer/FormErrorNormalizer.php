@@ -40,7 +40,7 @@ class FormErrorNormalizer implements NormalizerInterface
     /**
      * {@inheritdoc}
      */
-    public function normalize($object, $format = null, array $context = [])
+    public function normalize($object, $format = null, array $context = []): float|array|\ArrayObject|bool|int|string|null
     {
         return [
             'code' => isset($context['status_code']) ? $context['status_code'] : null,
@@ -51,8 +51,11 @@ class FormErrorNormalizer implements NormalizerInterface
 
     /**
      * {@inheritdoc}
+     * @param mixed $data
+     * @param null $format
+     * @param array $context
      */
-    public function supportsNormalization($data, $format = null)
+    public function supportsNormalization($data, $format = null, array $context = []): bool
     {
         return $data instanceof FormInterface && $data->isSubmitted() && !$data->isValid();
     }
@@ -64,7 +67,7 @@ class FormErrorNormalizer implements NormalizerInterface
      *
      * @return array
      */
-    private function convertFormToArray(FormInterface $data)
+    private function convertFormToArray(FormInterface $data): array
     {
         $form = $errors = [];
         foreach ($data->getErrors() as $error) {
@@ -105,5 +108,10 @@ class FormErrorNormalizer implements NormalizerInterface
         }
 
         return $this->translator->trans($error->getMessageTemplate(), $error->getMessageParameters(), 'validators');
+    }
+
+    public function getSupportedTypes(?string $format): array
+    {
+        return [];
     }
 }
