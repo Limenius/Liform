@@ -11,6 +11,7 @@
 
 namespace Limenius\Liform\Serializer\Normalizer;
 
+use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
@@ -112,6 +113,6 @@ class FormErrorNormalizer implements NormalizerInterface
 
     public function getSupportedTypes(?string $format): array
     {
-        return [];
+        return [Form::class];
     }
 }
