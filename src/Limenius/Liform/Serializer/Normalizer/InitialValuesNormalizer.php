@@ -12,6 +12,7 @@
 namespace Limenius\Liform\Serializer\Normalizer;
 
 use Symfony\Component\Form\Form;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Limenius\Liform\FormUtil;
@@ -26,7 +27,7 @@ class InitialValuesNormalizer implements NormalizerInterface
     /**
      * {@inheritdoc}
      */
-    public function normalize($form, $format = null, array $context = [])
+    public function normalize($form, $format = null, array $context = []): float|array|\ArrayObject|bool|int|string|null
     {
         $formView = $form->createView();
 
@@ -35,20 +36,24 @@ class InitialValuesNormalizer implements NormalizerInterface
 
     /**
      * {@inheritdoc}
+     * @param mixed $data
+     * @param null $format
+     * @param array $context
      */
-    public function supportsNormalization($data, $format = null)
+    public function supportsNormalization($data, $format = null, array $context = []): bool
     {
         return $data instanceof Form;
     }
 
     /**
      * Gets the values of the form
-     * @param Form     $form
-     * @param FormView $formView
+     * @param Form|FormInterface     $form
+     * @param FormView               $formView
      *
      * @return mixed
      */
-    private function getValues(Form $form, FormView $formView)
+//    private function getValues(Form $form, FormView $formView): mixed
+    private function getValues(FormInterface $form, FormView $formView): mixed
     {
         if (!empty($formView->children)) {
             if (in_array('choice', FormUtil::typeAncestry($form)) &&
@@ -56,9 +61,9 @@ class InitialValuesNormalizer implements NormalizerInterface
             ) {
                 if ($formView->vars['multiple']) {
                     return $this->normalizeMultipleExpandedChoice($formView);
-                } else {
-                    return $this->normalizeExpandedChoice($formView);
                 }
+
+                return $this->normalizeExpandedChoice($formView);
             }
             // Force serialization as {} instead of []
             $data = (object) array();
@@ -71,15 +76,15 @@ class InitialValuesNormalizer implements NormalizerInterface
             }
 
             return (array) $data;
-        } else {
-            // handle separatedly the case with checkboxes, so the result is
-            // true/false instead of 1/0
-            if (isset($formView->vars['checked'])) {
-                return $formView->vars['checked'];
-            }
-
-            return $formView->vars['value'];
         }
+
+        // handle separatedly the case with checkboxes, so the result is
+        // true/false instead of 1/0
+        if (isset($formView->vars['checked'])) {
+            return $formView->vars['checked'];
+        }
+
+        return $formView->vars['value'];
     }
 
     /**
@@ -88,7 +93,7 @@ class InitialValuesNormalizer implements NormalizerInterface
      *
      * @return array
      */
-    private function normalizeMultipleExpandedChoice(FormView $formView)
+    private function normalizeMultipleExpandedChoice(FormView $formView): array
     {
         $data = array();
         foreach ($formView->children as $name => $child) {
@@ -106,7 +111,7 @@ class InitialValuesNormalizer implements NormalizerInterface
      *
      * @return mixed
      */
-    private function normalizeExpandedChoice(FormView $formView)
+    private function normalizeExpandedChoice(FormView $formView): mixed
     {
         foreach ($formView->children as $name => $child) {
             if ($child->vars['checked']) {
@@ -115,5 +120,10 @@ class InitialValuesNormalizer implements NormalizerInterface
         }
 
         return null;
+    }
+
+    public function getSupportedTypes(?string $format): array
+    {
+        return [Form::class];
     }
 }

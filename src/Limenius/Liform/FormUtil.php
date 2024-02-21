@@ -87,7 +87,7 @@ class FormUtil
      */
     public static function type(FormInterface $form)
     {
-        return $form->getConfig()->getType()->getName();
+        return $form->getConfig()->getType()->getBlockPrefix();
     }
 
     /**
