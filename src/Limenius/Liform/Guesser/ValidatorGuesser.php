@@ -15,6 +15,9 @@ use Symfony\Component\Form\Extension\Validator\ValidatorTypeGuesser;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Form\Guess\ValueGuess;
 use Symfony\Component\Form\Guess\Guess;
+use Symfony\Component\Validator\Constraints\Range;
+use Symfony\Component\Validator\Constraints\Type;
+use Symfony\Component\Validator\Constraints\Length;
 
 /**
  * @author Nacho Martín <nacho@limenius.com>
@@ -41,21 +44,23 @@ class ValidatorGuesser extends ValidatorTypeGuesser
     public function guessMinLengthForConstraint(Constraint $constraint)
     {
         switch (get_class($constraint)) {
-            case 'Symfony\Component\Validator\Constraints\Length':
+            case Length::class:
                 if (is_numeric($constraint->min)) {
                     return new ValueGuess($constraint->min, Guess::HIGH_CONFIDENCE);
                 }
                 break;
-            case 'Symfony\Component\Validator\Constraints\Type':
+            case Type::class:
                 if (in_array($constraint->type, array('double', 'float', 'numeric', 'real'))) {
                     return new ValueGuess(null, Guess::MEDIUM_CONFIDENCE);
                 }
                 break;
-            case 'Symfony\Component\Validator\Constraints\Range':
+            case Range::class:
                 if (is_numeric($constraint->min)) {
                     return new ValueGuess(strlen((string) $constraint->min), Guess::LOW_CONFIDENCE);
                 }
                 break;
         }
+
+        return null;
     }
 }
