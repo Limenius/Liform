@@ -43,7 +43,7 @@ class ChoiceTransformerTest extends LiformTestCase
 
         $resolver = new Resolver();
         $resolver->setTransformer('choice', new Transformer\ChoiceTransformer($this->translator, null));
-        $transformer = new CompoundTransformer($this->translator, null, $resolver);
+        $transformer = new CompoundTransformer($this->translator, $resolver);
         $transformed = $transformer->transform($form);
         $this->assertTrue(is_array($transformed));
         $this->assertArrayHasKey('enum_titles', $transformed['properties']['firstName']);
@@ -73,7 +73,7 @@ class ChoiceTransformerTest extends LiformTestCase
 
         $resolver = new Resolver();
         $resolver->setTransformer('choice', new Transformer\ChoiceTransformer($this->translator, null));
-        $transformer = new CompoundTransformer($this->translator, null, $resolver);
+        $transformer = new CompoundTransformer($this->translator, $resolver);
         $transformed = $transformer->transform($form);
         $this->assertTrue(is_array($transformed));
         $this->assertArrayHasKey('enum_titles', $transformed['properties']['firstName']);
@@ -100,7 +100,7 @@ class ChoiceTransformerTest extends LiformTestCase
 
         $resolver = new Resolver();
         $resolver->setTransformer('choice', new Transformer\ChoiceTransformer($this->translator, null));
-        $transformer = new CompoundTransformer($this->translator, null, $resolver);
+        $transformer = new CompoundTransformer($this->translator, $resolver);
         $transformed = $transformer->transform($form);
         $this->assertTrue(is_array($transformed));
         $this->assertArrayHasKey('items', $transformed['properties']['firstName']);
@@ -123,7 +123,7 @@ class ChoiceTransformerTest extends LiformTestCase
 
         $resolver = new Resolver();
         $resolver->setTransformer('choice', new Transformer\ChoiceTransformer($this->translator, null));
-        $transformer = new CompoundTransformer($this->translator, null, $resolver);
+        $transformer = new CompoundTransformer($this->translator, $resolver);
         $transformed = $transformer->transform($form);
         $this->assertTrue(is_array($transformed));
         $this->assertArrayHasKey('items', $transformed['properties']['firstName']);

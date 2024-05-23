@@ -46,7 +46,10 @@ class CompoundTransformer extends AbstractTransformer
         $order = 1;
         $required = [];
 
-        foreach ($form->all() as $name => $field) {
+        $formItems = $form->all();
+        uasort($formItems, static fn($a, $b): int => $a->getConfig()->getOption('priority') <=> $b->getConfig()->getOption('priority'));
+
+        foreach ($formItems as $name => $field) {
             $transformerData = $this->resolver->resolve($field);
             $transformedChild = $transformerData['transformer']->transform($field, $extensions, $transformerData['widget']);
             $transformedChild['propertyOrder'] = $order;
