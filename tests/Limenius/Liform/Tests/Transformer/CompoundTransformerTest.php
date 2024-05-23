@@ -30,7 +30,7 @@ use Limenius\Liform\Tests\LiformTestCase;
  */
 class CompoundTransformerTest extends LiformTestCase
 {
-    public function testOrder()
+    public function testOrder(): void
     {
         $form = $this->factory->create(FormType::class)
             ->add('firstName', TextType::class)

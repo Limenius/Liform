@@ -64,7 +64,7 @@ class InitialValuesNormalizer implements NormalizerInterface
                 }
             }
             // Force serialization as {} instead of []
-            $data = (object) array();
+            $data = (object) [];
             foreach ($formView->children as $name => $child) {
                 // Avoid unknown field error when csrf_protection is true
                 // CSRF token should be extracted another way
@@ -75,13 +75,7 @@ class InitialValuesNormalizer implements NormalizerInterface
 
             return (array) $data;
         } else {
-            // handle separatedly the case with checkboxes, so the result is
-            // true/false instead of 1/0
-            if (isset($formView->vars['checked'])) {
-                return $formView->vars['checked'];
-            }
-
-            return $formView->vars['value'];
+            return $formView->vars['checked'] ?? $formView->vars['value'];
         }
     }
 
@@ -93,7 +87,7 @@ class InitialValuesNormalizer implements NormalizerInterface
      */
     private function normalizeMultipleExpandedChoice(FormView $formView): array
     {
-        $data = array();
+        $data = [];
         foreach ($formView->children as $name => $child) {
             if ($child->vars['checked']) {
                 $data[] = $child->vars['value'];

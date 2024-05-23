@@ -26,9 +26,7 @@ class ValidatorGuesser extends ValidatorTypeGuesser
      */
     public function guessMinLength(string $class, string $property)
     {
-        return $this->guess($class, $property, function (Constraint $constraint) {
-            return $this->guessMinLengthForConstraint($constraint);
-        });
+        return $this->guess($class, $property, fn(Constraint $constraint) => $this->guessMinLengthForConstraint($constraint));
     }
 
     /**
@@ -40,18 +38,18 @@ class ValidatorGuesser extends ValidatorTypeGuesser
      */
     public function guessMinLengthForConstraint(Constraint $constraint)
     {
-        switch (get_class($constraint)) {
-            case 'Symfony\Component\Validator\Constraints\Length':
+        switch ($constraint::class) {
+            case \Symfony\Component\Validator\Constraints\Length::class:
                 if (is_numeric($constraint->min)) {
                     return new ValueGuess($constraint->min, Guess::HIGH_CONFIDENCE);
                 }
                 break;
-            case 'Symfony\Component\Validator\Constraints\Type':
-                if (in_array($constraint->type, array('double', 'float', 'numeric', 'real'))) {
+            case \Symfony\Component\Validator\Constraints\Type::class:
+                if (in_array($constraint->type, ['double', 'float', 'numeric', 'real'])) {
                     return new ValueGuess(null, Guess::MEDIUM_CONFIDENCE);
                 }
                 break;
-            case 'Symfony\Component\Validator\Constraints\Range':
+            case \Symfony\Component\Validator\Constraints\Range::class:
                 if (is_numeric($constraint->min)) {
                     return new ValueGuess(strlen((string) $constraint->min), Guess::LOW_CONFIDENCE);
                 }

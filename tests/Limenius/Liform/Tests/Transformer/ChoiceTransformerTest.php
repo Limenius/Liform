@@ -25,7 +25,7 @@ use Limenius\Liform\Tests\LiformTestCase;
  */
 class ChoiceTransformerTest extends LiformTestCase
 {
-    public function testChoice()
+    public function testChoice(): void
     {
         $form = $this->factory->create(FormType::class)
             ->add(
@@ -39,9 +39,7 @@ class ChoiceTransformerTest extends LiformTestCase
         // 4 times: firstName, form, and the two choices
         $this->translator->expects($this->exactly(4))
             ->method('trans')
-            ->will($this->returnCallback(function ($str) {
-                return $str.'-translated';
-            }));
+            ->will($this->returnCallback(fn($str) => $str.'-translated'));
 
         $resolver = new Resolver();
         $resolver->setTransformer('choice', new Transformer\ChoiceTransformer($this->translator, null));
@@ -56,7 +54,7 @@ class ChoiceTransformerTest extends LiformTestCase
         $this->assertEquals(['A', 'B'], $transformed['properties']['firstName']['enum']);
     }
 
-    public function testChoiceExpanded()
+    public function testChoiceExpanded(): void
     {
         $form = $this->factory->create(FormType::class)
             ->add(
@@ -71,9 +69,7 @@ class ChoiceTransformerTest extends LiformTestCase
         // 4 times: firstName, form, and the two choices
         $this->translator->expects($this->exactly(4))
             ->method('trans')
-            ->will($this->returnCallback(function ($str) {
-                return $str.'-translated';
-            }));
+            ->will($this->returnCallback(fn($str) => $str.'-translated'));
 
         $resolver = new Resolver();
         $resolver->setTransformer('choice', new Transformer\ChoiceTransformer($this->translator, null));
@@ -90,7 +86,7 @@ class ChoiceTransformerTest extends LiformTestCase
         $this->assertEquals('choice-expanded',  $transformed['properties']['firstName']['widget']);
     }
 
-    public function testChoiceMultiple()
+    public function testChoiceMultiple(): void
     {
         $form = $this->factory->create(FormType::class)
             ->add(
@@ -112,7 +108,7 @@ class ChoiceTransformerTest extends LiformTestCase
         $this->assertArrayNotHasKey('widget', $transformed['properties']['firstName']);
     }
 
-    public function testChoiceMultipleExpanded()
+    public function testChoiceMultipleExpanded(): void
     {
         $form = $this->factory->create(FormType::class)
             ->add(

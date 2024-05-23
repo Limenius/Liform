@@ -20,11 +20,6 @@ use Symfony\Component\Form\FormInterface;
 class Liform implements LiformInterface
 {
     /**
-     * @var ResolverInterface
-     */
-    private $resolver;
-
-    /**
      * @var ExtensionInterface[]
      */
     private $extensions = [];
@@ -32,9 +27,8 @@ class Liform implements LiformInterface
     /**
      * @param ResolverInterface $resolver
      */
-    public function __construct(ResolverInterface $resolver)
+    public function __construct(private readonly ResolverInterface $resolver)
     {
-        $this->resolver = $resolver;
     }
 
     /**

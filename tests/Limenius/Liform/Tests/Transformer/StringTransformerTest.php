@@ -25,7 +25,7 @@ use Limenius\Liform\Tests\LiformTestCase;
  */
 class StringTransformerTest extends LiformTestCase
 {
-    public function testPattern()
+    public function testPattern(): void
     {
         $form = $this->factory->create(FormType::class)
             ->add(
