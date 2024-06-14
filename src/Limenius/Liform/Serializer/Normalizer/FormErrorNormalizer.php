@@ -16,7 +16,6 @@ use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use Symfony\Contracts\Translation\TranslatorInterface as TranslatorContract;
 
 /**
  * Normalizes invalid Form instances.
@@ -41,7 +40,7 @@ class FormErrorNormalizer implements NormalizerInterface
     /**
      * {@inheritdoc}
      */
-    public function normalize($object, $format = null, array $context = []): float|array|\ArrayObject|bool|int|string|null
+    public function normalize(mixed $object, ?string $format = null, array $context = []): float|array|\ArrayObject|bool|int|string|null
     {
         return [
             'code' => isset($context['status_code']) ? $context['status_code'] : null,
@@ -52,22 +51,20 @@ class FormErrorNormalizer implements NormalizerInterface
 
     /**
      * {@inheritdoc}
-     * @param mixed $data
-     * @param null $format
-     * @param array $context
      */
-    public function supportsNormalization($data, $format = null, array $context = []): bool
+    public function supportsNormalization(mixed $data, ?string $format = null, array $context = []): bool
     {
         return $data instanceof FormInterface && $data->isSubmitted() && !$data->isValid();
     }
 
     /**
-     * This code has been taken from JMSSerializer.
-     *
-     * @param FormInterface $data
-     *
-     * @return array
+     * {@inheritdoc}
      */
+    public function getSupportedTypes(?string $format): array
+    {
+        return [Form::class => true];
+    }
+
     private function convertFormToArray(FormInterface $data): array
     {
         $form = $errors = [];
@@ -93,21 +90,9 @@ class FormErrorNormalizer implements NormalizerInterface
         return $form;
     }
 
-    /**
-     * @param FormError $error
-     *
-     * @return string
-     */
-    private function getErrorMessage(FormError $error)
+    private function getErrorMessage(FormError $error): string
     {
         if (null !== $error->getMessagePluralization()) {
-            // old way
-//            if ($this->translator instanceof TranslatorContract) {
-//                return $this->translator->trans($error->getMessageTemplate(), ['%count%' => $error->getMessagePluralization()] + $error->getMessageParameters(), 'validators');
-//            } else {
-//                return $this->translator->transChoice($error->getMessageTemplate(), $error->getMessagePluralization(), $error->getMessageParameters(), 'validators');
-//            }
-
             return $this->translator->trans(
                 $error->getMessageTemplate(),
                 array_merge(
@@ -119,10 +104,5 @@ class FormErrorNormalizer implements NormalizerInterface
         }
 
         return $this->translator->trans($error->getMessageTemplate(), $error->getMessageParameters(), 'validators');
-    }
-
-    public function getSupportedTypes(?string $format): array
-    {
-        return [Form::class];
     }
 }

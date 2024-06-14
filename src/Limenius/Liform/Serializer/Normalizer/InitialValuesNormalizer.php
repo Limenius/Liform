@@ -27,32 +27,29 @@ class InitialValuesNormalizer implements NormalizerInterface
     /**
      * {@inheritdoc}
      */
-    public function normalize($form, $format = null, array $context = []): float|array|\ArrayObject|bool|int|string|null
+    public function normalize($object, $format = null, array $context = []): float|array|\ArrayObject|bool|int|string|null
     {
-        $formView = $form->createView();
+        $formView = $object->createView();
 
-        return $this->getValues($form, $formView);
+        return $this->getValues($object, $formView);
     }
 
     /**
      * {@inheritdoc}
-     * @param mixed $data
-     * @param null $format
-     * @param array $context
      */
-    public function supportsNormalization($data, $format = null, array $context = []): bool
+    public function supportsNormalization(mixed $data, ?string $format = null, array $context = []): bool
     {
         return $data instanceof Form;
     }
 
     /**
-     * Gets the values of the form
-     * @param Form|FormInterface     $form
-     * @param FormView               $formView
-     *
-     * @return mixed
+     * {@inheritdoc}
      */
-//    private function getValues(Form $form, FormView $formView): mixed
+    public function getSupportedTypes(?string $format): array
+    {
+        return [Form::class => true];
+    }
+
     private function getValues(FormInterface $form, FormView $formView): mixed
     {
         if (!empty($formView->children)) {
@@ -66,7 +63,7 @@ class InitialValuesNormalizer implements NormalizerInterface
                 return $this->normalizeExpandedChoice($formView);
             }
             // Force serialization as {} instead of []
-            $data = (object) array();
+            $data = (object) [];
             foreach ($formView->children as $name => $child) {
                 // Avoid unknown field error when csrf_protection is true
                 // CSRF token should be extracted another way
@@ -87,15 +84,9 @@ class InitialValuesNormalizer implements NormalizerInterface
         return $formView->vars['value'];
     }
 
-    /**
-     * Normalize when choice is multiple
-     * @param FormView $formView
-     *
-     * @return array
-     */
     private function normalizeMultipleExpandedChoice(FormView $formView): array
     {
-        $data = array();
+        $data = [];
         foreach ($formView->children as $name => $child) {
             if ($child->vars['checked']) {
                 $data[] = $child->vars['value'];
@@ -105,12 +96,6 @@ class InitialValuesNormalizer implements NormalizerInterface
         return $data;
     }
 
-    /**
-     * Normalize when choice is expanded
-     * @param FormView $formView
-     *
-     * @return mixed
-     */
     private function normalizeExpandedChoice(FormView $formView): mixed
     {
         foreach ($formView->children as $name => $child) {
@@ -120,10 +105,5 @@ class InitialValuesNormalizer implements NormalizerInterface
         }
 
         return null;
-    }
-
-    public function getSupportedTypes(?string $format): array
-    {
-        return [Form::class];
     }
 }
