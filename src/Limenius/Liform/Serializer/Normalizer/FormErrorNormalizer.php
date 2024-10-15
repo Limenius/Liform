@@ -35,7 +35,7 @@ class FormErrorNormalizer implements NormalizerInterface
     /**
      * {@inheritdoc}
      */
-    public function normalize($object, $format = null, array $context = []): float|array|\ArrayObject|bool|int|string|null
+    public function normalize($object, $format = null, array $context = []): array|string|int|float|bool|\ArrayObject|null
     {
         return [
             'code' => $context['status_code'] ?? null,
@@ -53,6 +53,11 @@ class FormErrorNormalizer implements NormalizerInterface
     public function supportsNormalization($data, $format = null, array $context = []): bool
     {
         return $data instanceof FormInterface && $data->isSubmitted() && !$data->isValid();
+    }
+
+    public function getSupportedTypes(?string $format): array
+    {
+        return [Form::class];
     }
 
     /**
