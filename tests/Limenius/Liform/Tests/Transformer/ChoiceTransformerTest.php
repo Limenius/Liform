@@ -39,13 +39,12 @@ class ChoiceTransformerTest extends LiformTestCase
         // 4 times: firstName, form, and the two choices
         $this->translator->expects($this->exactly(4))
             ->method('trans')
-            ->will($this->returnCallback(fn($str) => $str.'-translated'));
+            ->willReturnCallback(fn($str) => $str.'-translated');
 
         $resolver = new Resolver();
         $resolver->setTransformer('choice', new Transformer\ChoiceTransformer($this->translator, null));
         $transformer = new CompoundTransformer($this->translator, $resolver);
         $transformed = $transformer->transform($form);
-        $this->assertTrue(is_array($transformed));
         $this->assertArrayHasKey('enum_titles', $transformed['properties']['firstName']);
         $this->assertArrayHasKey('enum_titles', $transformed['properties']['firstName']['options']);
         $this->assertEquals(['a-translated', 'b-translated'], $transformed['properties']['firstName']['enum_titles']);
@@ -69,13 +68,12 @@ class ChoiceTransformerTest extends LiformTestCase
         // 4 times: firstName, form, and the two choices
         $this->translator->expects($this->exactly(4))
             ->method('trans')
-            ->will($this->returnCallback(fn($str) => $str.'-translated'));
+            ->willReturnCallback(fn($str) => $str.'-translated');
 
         $resolver = new Resolver();
         $resolver->setTransformer('choice', new Transformer\ChoiceTransformer($this->translator, null));
         $transformer = new CompoundTransformer($this->translator, $resolver);
         $transformed = $transformer->transform($form);
-        $this->assertTrue(is_array($transformed));
         $this->assertArrayHasKey('enum_titles', $transformed['properties']['firstName']);
         $this->assertArrayHasKey('enum_titles', $transformed['properties']['firstName']['options']);
         $this->assertEquals(['a-translated', 'b-translated'], $transformed['properties']['firstName']['enum_titles']);
@@ -102,7 +100,6 @@ class ChoiceTransformerTest extends LiformTestCase
         $resolver->setTransformer('choice', new Transformer\ChoiceTransformer($this->translator, null));
         $transformer = new CompoundTransformer($this->translator, $resolver);
         $transformed = $transformer->transform($form);
-        $this->assertTrue(is_array($transformed));
         $this->assertArrayHasKey('items', $transformed['properties']['firstName']);
         $this->assertEquals('array', $transformed['properties']['firstName']['type']);
         $this->assertArrayNotHasKey('widget', $transformed['properties']['firstName']);

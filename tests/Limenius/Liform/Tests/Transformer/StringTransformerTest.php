@@ -37,7 +37,6 @@ class StringTransformerTest extends LiformTestCase
         $resolver->setTransformer('text', new StringTransformer($this->translator));
         $transformer = new CompoundTransformer($this->translator, $resolver);
         $transformed = $transformer->transform($form);
-        $this->assertTrue(is_array($transformed));
         $this->assertEquals('.{5,}', $transformed['properties']['firstName']['pattern']);
     }
 }

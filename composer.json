@@ -30,9 +30,10 @@
   "require-dev": {
     "dealerdirect/phpcodesniffer-composer-installer": "^1.0",
     "escapestudios/symfony2-coding-standard": "^3.0",
-    "phpunit/phpunit": "^10.5",
+    "phpunit/phpunit": "^11.4",
     "phpcompatibility/php-compatibility": "^9.3",
-    "phpstan/phpstan": "^1.8"
+    "phpstan/phpstan": "^1.8",
+    "rector/rector": "^1.2"
   },
   "scripts": {
     "test": "phpunit",
