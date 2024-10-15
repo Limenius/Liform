@@ -24,13 +24,13 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
  */
 class InitialValuesNormalizerTest extends LiformTestCase
 {
-    public function testConstruct()
+    public function testConstruct(): void
     {
         $normalizer = new InitialValuesNormalizer();
         $this->assertInstanceOf(InitialValuesNormalizer::class, $normalizer);
     }
 
-    public function testSimpleCase()
+    public function testSimpleCase(): void
     {
         $form = $this->factory->create(FormType::class , ['firstName' => 'Joe'])
             ->add('firstName', TextType::class)
@@ -40,7 +40,7 @@ class InitialValuesNormalizerTest extends LiformTestCase
         $this->assertEquals('Joe', $data['firstName']);
     }
 
-    public function testChoiceExpandedMultiple()
+    public function testChoiceExpandedMultiple(): void
     {
         $form = $this->factory->create(FormType::class, ['firstName' => ['A']])
             ->add(
@@ -59,7 +59,7 @@ class InitialValuesNormalizerTest extends LiformTestCase
 
     }
 
-    public function testChoiceExpanded()
+    public function testChoiceExpanded(): void
     {
         $form = $this->factory->create(FormType::class, ['firstName' => 'A'])
             ->add(

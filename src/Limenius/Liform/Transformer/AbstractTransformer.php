@@ -20,14 +20,12 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 abstract class AbstractTransformer implements TransformerInterface
 {
-    protected TranslatorInterface $translator;
-
-    protected ?FormTypeGuesserInterface $validatorGuesser = null;
-
-    public function __construct(TranslatorInterface $translator, FormTypeGuesserInterface $validatorGuesser = null)
+    /**
+     * @param TranslatorInterface           $translator
+     * @param FormTypeGuesserInterface|null $validatorGuesser
+     */
+    public function __construct(protected TranslatorInterface $translator, protected ?FormTypeGuesserInterface $validatorGuesser = null)
     {
-        $this->translator = $translator;
-        $this->validatorGuesser = $validatorGuesser;
     }
 
     public function isRequired(FormInterface $form): bool
@@ -46,13 +44,23 @@ abstract class AbstractTransformer implements TransformerInterface
         return $newSchema;
     }
 
-    /** @param ExtensionInterface[] $extensions */
-    protected function addCommonSpecs(
-        FormInterface $form,
-        array $schema,
-        array $extensions = [],
-        ?string $widget = null
-    ): array {
+//    /** @param ExtensionInterface[] $extensions */
+//    protected function addCommonSpecs(
+//        FormInterface $form,
+//        array $schema,
+//        array $extensions = [],
+//        ?string $widget = null
+//    ): array {
+    /**
+     * @param FormInterface        $form
+     * @param array                $schema
+     * @param ExtensionInterface[] $extensions
+     * @param string               $widget
+     *
+     * @return array
+     */
+    protected function addCommonSpecs(FormInterface $form, array $schema, array $extensions = [], $widget = null)
+    {
         $schema = $this->addLabel($form, $schema);
         $schema = $this->addAttr($form, $schema);
         $schema = $this->addPattern($form, $schema);
@@ -133,8 +141,7 @@ abstract class AbstractTransformer implements TransformerInterface
         return $schema;
     }
 
-    /** @param mixed $configWidget */
-    protected function addWidget(FormInterface $form, array $schema, $configWidget): array
+    protected function addWidget(FormInterface $form, array $schema, mixed $configWidget): array
     {
         if ($liform = $form->getConfig()->getOption('liform')) {
             if (isset($liform['widget']) && $widget = $liform['widget']) {

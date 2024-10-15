@@ -1,6 +1,8 @@
 Liform
 ======
 
+This fork also merges git@github.com:answear/Liform.git.
+
 Liform is a library for serializing Symfony Forms into [JSON schema](http://json-schema.org/). It can be used along with [liform-react](https://github.com/Limenius/liform-react) or [json-editor](https://github.com/jdorn/json-editor), or any other form generator based on json-schema.
 
 It is used by [LiformBundle](https://github.com/Limenius/LiformBundle) but can also be used as a stand-alone library.
@@ -19,19 +21,14 @@ Liform generates a JSON schema representation, that serves as documentation and 
 Open a console, enter your project directory and execute the
 following command to download the latest stable version of this library:
 
-    $ composer require limenius/liform
+```bash
+composer require survos/liform
+```
 
 This command requires you to have Composer installed globally, as explained
 in the *installation chapter* of the Composer documentation.
 
 > Liform follows the PSR-4 convention names for its classes, which means you can easily integrate `Liform` classes loading in your own autoloader.
-
-#### Note
-`symfony/form ^5.0` broke backwards compatibility on some abstract functions we use. If you need to function with
-earlier versions, you need to use Liform v0.15 or earlier:
-```bash
-composer require limenius/liform "^0.15"
-```
 
 ## Usage
 

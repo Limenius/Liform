@@ -11,6 +11,7 @@
 
 namespace Limenius\Liform\Serializer\Normalizer;
 
+use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
@@ -25,16 +26,10 @@ use Symfony\Contracts\Translation\TranslatorInterface as TranslatorContract;
 class FormErrorNormalizer implements NormalizerInterface
 {
     /**
-     * @var TranslatorInterface
-     */
-    private $translator;
-
-    /**
      * @param TranslatorInterface $translator
      */
-    public function __construct(TranslatorInterface $translator)
+    public function __construct(private readonly TranslatorInterface $translator)
     {
-        $this->translator = $translator;
     }
 
     /**
@@ -43,7 +38,7 @@ class FormErrorNormalizer implements NormalizerInterface
     public function normalize($object, $format = null, array $context = []): array|string|int|float|bool|\ArrayObject|null
     {
         return [
-            'code' => isset($context['status_code']) ? $context['status_code'] : null,
+            'code' => $context['status_code'] ?? null,
             'message' => 'Validation Failed',
             'errors' => $this->convertFormToArray($object),
         ];
@@ -51,6 +46,9 @@ class FormErrorNormalizer implements NormalizerInterface
 
     /**
      * {@inheritdoc}
+     * @param mixed $data
+     * @param null $format
+     * @param array $context
      */
     public function supportsNormalization($data, $format = null, array $context = []): bool
     {
@@ -69,7 +67,7 @@ class FormErrorNormalizer implements NormalizerInterface
      *
      * @return array
      */
-    private function convertFormToArray(FormInterface $data)
+    private function convertFormToArray(FormInterface $data): array
     {
         $form = $errors = [];
         foreach ($data->getErrors() as $error) {
@@ -102,13 +100,28 @@ class FormErrorNormalizer implements NormalizerInterface
     private function getErrorMessage(FormError $error)
     {
         if (null !== $error->getMessagePluralization()) {
-            if ($this->translator instanceof TranslatorContract) {
-                return $this->translator->trans($error->getMessageTemplate(), ['%count%' => $error->getMessagePluralization()] + $error->getMessageParameters(), 'validators');
-            } else {
-                return $this->translator->transChoice($error->getMessageTemplate(), $error->getMessagePluralization(), $error->getMessageParameters(), 'validators');
-            }
+            // old way
+//            if ($this->translator instanceof TranslatorContract) {
+//                return $this->translator->trans($error->getMessageTemplate(), ['%count%' => $error->getMessagePluralization()] + $error->getMessageParameters(), 'validators');
+//            } else {
+//                return $this->translator->transChoice($error->getMessageTemplate(), $error->getMessagePluralization(), $error->getMessageParameters(), 'validators');
+//            }
+
+            return $this->translator->trans(
+                $error->getMessageTemplate(),
+                array_merge(
+                    $error->getMessageParameters(),
+                    ['%count%' => $error->getMessagePluralization()]
+                ),
+                'validators'
+            );
         }
 
         return $this->translator->trans($error->getMessageTemplate(), $error->getMessageParameters(), 'validators');
+    }
+
+    public function getSupportedTypes(?string $format): array
+    {
+        return [Form::class];
     }
 }

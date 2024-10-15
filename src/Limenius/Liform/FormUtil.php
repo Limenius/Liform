@@ -27,7 +27,7 @@ class FormUtil
     public static function typeAncestry(FormInterface $form)
     {
         $types = [];
-        self::typeAncestryForType($form->getConfig()->getType(), $types);
+        self::typeAncestryForType($types, $form->getConfig()->getType());
 
         return $types;
     }
@@ -38,7 +38,7 @@ class FormUtil
      *
      * @return void
      */
-    public static function typeAncestryForType(ResolvedFormTypeInterface $formType = null, array &$types)
+    public static function typeAncestryForType(array &$types, ResolvedFormTypeInterface $formType = null): void
     {
         if (!($formType instanceof ResolvedFormTypeInterface)) {
             return;
@@ -46,17 +46,16 @@ class FormUtil
 
         $types[] = $formType->getBlockPrefix();
 
-        self::typeAncestryForType($formType->getParent(), $types);
+        self::typeAncestryForType($types, $formType->getParent());
     }
 
     /**
      * Returns the dataClass of the form or its parents, if any
      *
-     * @param mixed $formType
      *
      * @return string|null the dataClass
      */
-    public static function findDataClass($formType)
+    public static function findDataClass(mixed $formType)
     {
         if ($dataClass = $formType->getConfig()->getDataClass()) {
             return $dataClass;
@@ -71,11 +70,10 @@ class FormUtil
 
     /**
      * @param FormInterface $form
-     * @param mixed         $type
      *
      * @return boolean
      */
-    public static function isTypeInAncestry(FormInterface $form, $type)
+    public static function isTypeInAncestry(FormInterface $form, mixed $type)
     {
         return in_array($type, self::typeAncestry($form));
     }
@@ -87,7 +85,7 @@ class FormUtil
      */
     public static function type(FormInterface $form)
     {
-        return $form->getConfig()->getType()->getName();
+        return $form->getConfig()->getType()->getBlockPrefix();
     }
 
     /**

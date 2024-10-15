@@ -25,7 +25,7 @@ use Limenius\Liform\Tests\LiformTestCase;
  */
 class StringTransformerTest extends LiformTestCase
 {
-    public function testPattern()
+    public function testPattern(): void
     {
         $form = $this->factory->create(FormType::class)
             ->add(
@@ -35,7 +35,7 @@ class StringTransformerTest extends LiformTestCase
             );
         $resolver = new Resolver();
         $resolver->setTransformer('text', new StringTransformer($this->translator));
-        $transformer = new CompoundTransformer($this->translator, null, $resolver);
+        $transformer = new CompoundTransformer($this->translator, $resolver);
         $transformed = $transformer->transform($form);
         $this->assertTrue(is_array($transformed));
         $this->assertEquals('.{5,}', $transformed['properties']['firstName']['pattern']);
