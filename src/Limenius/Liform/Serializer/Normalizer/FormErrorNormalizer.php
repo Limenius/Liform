@@ -26,16 +26,10 @@ use Symfony\Contracts\Translation\TranslatorInterface as TranslatorContract;
 class FormErrorNormalizer implements NormalizerInterface
 {
     /**
-     * @var TranslatorInterface
-     */
-    private $translator;
-
-    /**
      * @param TranslatorInterface $translator
      */
-    public function __construct(TranslatorInterface $translator)
+    public function __construct(private readonly TranslatorInterface $translator)
     {
-        $this->translator = $translator;
     }
 
     /**
@@ -44,7 +38,7 @@ class FormErrorNormalizer implements NormalizerInterface
     public function normalize($object, $format = null, array $context = []): float|array|\ArrayObject|bool|int|string|null
     {
         return [
-            'code' => isset($context['status_code']) ? $context['status_code'] : null,
+            'code' => $context['status_code'] ?? null,
             'message' => 'Validation Failed',
             'errors' => $this->convertFormToArray($object),
         ];

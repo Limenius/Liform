@@ -24,13 +24,13 @@ use Symfony\Component\Form\Test\TypeTestCase;
  */
 class ResolverTest extends TypeTestCase
 {
-    public function testConstruct()
+    public function testConstruct(): void
     {
         $resolver = new Resolver();
         $this->assertInstanceOf(Resolver::class, $resolver);
     }
 
-    public function testCannotResolve()
+    public function testCannotResolve(): void
     {
         $this->expectException(TransformerException::class);
 
@@ -39,7 +39,7 @@ class ResolverTest extends TypeTestCase
         $this->assertArrayHasKey('transformer', $resolver->resolve($form));
     }
 
-    public function testResolve()
+    public function testResolve(): void
     {
         $resolver = new Resolver();
         $stub = $this->createMock(StringTransformer::class);

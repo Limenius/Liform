@@ -28,10 +28,10 @@ class CompoundTransformer extends AbstractTransformer
 
     /**
      * @param TranslatorInterface           $translator
-     * @param FormTypeGuesserInterface|null $validatorGuesser
      * @param ResolverInterface             $resolver
+     * @param FormTypeGuesserInterface|null $validatorGuesser
      */
-    public function __construct(TranslatorInterface $translator, FormTypeGuesserInterface $validatorGuesser = null, ResolverInterface $resolver)
+    public function __construct(TranslatorInterface $translator, ResolverInterface $resolver, FormTypeGuesserInterface $validatorGuesser = null)
     {
         parent::__construct($translator, $validatorGuesser);
         $this->resolver = $resolver;
@@ -47,9 +47,7 @@ class CompoundTransformer extends AbstractTransformer
         $required = [];
 
         $formItems = $form->all();
-        uasort($formItems, static function ($a, $b): int {
-            return $a->getConfig()->getOption('priority') <=> $b->getConfig()->getOption('priority');
-        });
+        uasort($formItems, static fn($a, $b): int => $a->getConfig()->getOption('priority') <=> $b->getConfig()->getOption('priority'));
 
         foreach ($formItems as $name => $field) {
             $transformerData = $this->resolver->resolve($field);
