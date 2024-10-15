@@ -125,7 +125,6 @@ class ChoiceTransformerTest extends LiformTestCase
         $resolver->setTransformer('choice', new Transformer\ChoiceTransformer($this->translator, null));
         $transformer = new CompoundTransformer($this->translator, $resolver);
         $transformed = $transformer->transform($form);
-        $this->assertTrue(is_array($transformed));
         $this->assertArrayHasKey('items', $transformed['properties']['firstName']);
         $this->assertEquals('array', $transformed['properties']['firstName']['type']);
         $this->assertArrayHasKey('widget', $transformed['properties']['firstName']);
