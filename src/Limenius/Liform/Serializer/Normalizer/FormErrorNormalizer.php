@@ -60,7 +60,7 @@ class FormErrorNormalizer implements NormalizerInterface
      */
     public function getSupportedTypes(?string $format): array
     {
-        return [Form::class];
+        return [Form::class => true];
     }
 
     /**
@@ -122,5 +122,4 @@ class FormErrorNormalizer implements NormalizerInterface
 
         return $this->translator->trans($error->getMessageTemplate(), $error->getMessageParameters(), 'validators');
     }
-
 }
