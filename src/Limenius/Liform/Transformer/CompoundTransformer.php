@@ -31,7 +31,7 @@ class CompoundTransformer extends AbstractTransformer
      * @param ResolverInterface             $resolver
      * @param FormTypeGuesserInterface|null $validatorGuesser
      */
-    public function __construct(TranslatorInterface $translator, ResolverInterface $resolver, FormTypeGuesserInterface $validatorGuesser = null)
+    public function __construct(TranslatorInterface $translator, ResolverInterface $resolver, ?FormTypeGuesserInterface $validatorGuesser = null)
     {
         parent::__construct($translator, $validatorGuesser);
         $this->resolver = $resolver;
