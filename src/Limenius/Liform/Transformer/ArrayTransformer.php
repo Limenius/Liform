@@ -32,7 +32,7 @@ class ArrayTransformer extends AbstractTransformer
      * @param FormTypeGuesserInterface|null $validatorGuesser
      * @param ResolverInterface             $resolver
      */
-    public function __construct(TranslatorInterface $translator, ResolverInterface $resolver, FormTypeGuesserInterface $validatorGuesser = null)
+    public function __construct(TranslatorInterface $translator, ResolverInterface $resolver, ?FormTypeGuesserInterface $validatorGuesser = null)
     {
         parent::__construct($translator, $validatorGuesser);
         $this->resolver = $resolver;
@@ -41,7 +41,7 @@ class ArrayTransformer extends AbstractTransformer
     /**
      * {@inheritdoc}
      */
-    public function transform(FormInterface $form, array $extensions = [], $widget = null): array
+    public function transform(FormInterface $form, array $extensions = [], ?string $widget = null): array
     {
         $children = [];
 
