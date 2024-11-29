@@ -21,7 +21,7 @@ class BooleanTransformer extends AbstractTransformer
     /**
      * {@inheritdoc}
      */
-    public function transform(FormInterface $form, array $extensions = [], $widget = null): array
+    public function transform(FormInterface $form, array $extensions = [], ?string $widget = null): array
     {
         $schema = ['type' => 'boolean'];
         $schema = $this->addCommonSpecs($form, $schema, $extensions, $widget);

@@ -22,7 +22,7 @@ class ChoiceTransformer extends AbstractTransformer
     /**
      * {@inheritdoc}
      */
-    public function transform(FormInterface $form, array $extensions = [], $widget = null): array
+    public function transform(FormInterface $form, array $extensions = [], ?string $widget = null): array
     {
         $formView = $form->createView();
 

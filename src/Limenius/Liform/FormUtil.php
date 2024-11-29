@@ -38,7 +38,7 @@ class FormUtil
      *
      * @return void
      */
-    public static function typeAncestryForType(array &$types, ResolvedFormTypeInterface $formType = null): void
+    public static function typeAncestryForType(array &$types, ?ResolvedFormTypeInterface $formType = null): void
     {
         if (!($formType instanceof ResolvedFormTypeInterface)) {
             return;
