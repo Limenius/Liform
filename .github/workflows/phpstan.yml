@@ -1,0 +1,20 @@
+name: phpstan-CI
+on:
+  [push, pull_request]
+jobs:
+  phpstan:
+    runs-on: ubuntu-latest
+    name: PHPStan
+    steps:
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.4
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: composer install
+        run: composer install
+      - name: PHPStan
+        run: vendor/bin/phpstan
+        env:
+          REQUIRE_DEV: true
