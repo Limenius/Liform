@@ -6,19 +6,18 @@ on:
 jobs:
     phpunit:
         name: "PHPUnit"
-        runs-on: "ubuntu-20.04"
+        runs-on: "ubuntu-24.04"
 
         strategy:
             matrix:
                 php-version:
-                    - "7.4"
-                    - "8.0"
-                    - "8.1"
+                    - "8.2"
+                    - "8.3"
                 deps:
                     - "normal"
                 include:
                     - deps: "low"
-                      php-version: "7.4"
+                      php-version: "8.2"
 
         steps:
             - name: "Checkout"

@@ -25,7 +25,7 @@ use Limenius\Liform\Tests\LiformTestCase;
  */
 class CommonTransformerTest extends LiformTestCase
 {
-    public function testRequired()
+    public function testRequired(): void
     {
         $form = $this->factory->create(FormType::class)
             ->add(
@@ -35,16 +35,15 @@ class CommonTransformerTest extends LiformTestCase
             );
         $resolver = new Resolver();
         $resolver->setTransformer('text', new StringTransformer($this->translator));
-        $transformer = new CompoundTransformer($this->translator, null, $resolver);
+        $transformer = new CompoundTransformer($this->translator, $resolver);
         $transformed = $transformer->transform($form);
 
-        $this->assertTrue(is_array($transformed));
         $this->assertArrayHasKey('required', $transformed);
         $this->assertTrue(is_array($transformed['required']));
         $this->assertContains('firstName', $transformed['required']);
     }
 
-    public function testDescription()
+    public function testDescription(): void
     {
         $form = $this->factory->create(FormType::class)
             ->add(
@@ -56,18 +55,15 @@ class CommonTransformerTest extends LiformTestCase
         $resolver->setTransformer('text', new StringTransformer($this->translator));
 
         $this->translator->method('trans')
-            ->will($this->returnCallback(function ($description) {
-                return $description;
-            }));
-        $transformer = new CompoundTransformer($this->translator, null, $resolver);
+            ->willReturnCallback(fn($description) => $description);
+        $transformer = new CompoundTransformer($this->translator, $resolver);
         $transformed = $transformer->transform($form);
 
-        $this->assertTrue(is_array($transformed));
         $this->assertArrayHasKey('description', $transformed['properties']['firstName']);
         $this->assertSame($description, $transformed['properties']['firstName']['description']);
     }
 
-    public function testDescriptionFromFormHelp()
+    public function testDescriptionFromFormHelp(): void
     {
         $form = $this->factory->create(FormType::class)
             ->add(
@@ -81,18 +77,15 @@ class CommonTransformerTest extends LiformTestCase
         $resolver = new Resolver();
         $resolver->setTransformer('text', new StringTransformer($this->translator));
         $this->translator->method('trans')
-            ->will($this->returnCallback(function ($description) {
-                return $description;
-            }));
-        $transformer = new CompoundTransformer($this->translator, null, $resolver);
+            ->willReturnCallback(fn($description) => $description);
+        $transformer = new CompoundTransformer($this->translator, $resolver);
         $transformed = $transformer->transform($form);
 
-        $this->assertTrue(is_array($transformed));
         $this->assertArrayHasKey('description', $transformed['properties']['firstName']);
         $this->assertSame($description, $transformed['properties']['firstName']['description']);
     }
 
-    public function testDescriptionFromFormHelpOverriddenByLiformDescription()
+    public function testDescriptionFromFormHelpOverriddenByLiformDescription(): void
     {
         $form = $this->factory->create(FormType::class)
             ->add(
@@ -108,19 +101,16 @@ class CommonTransformerTest extends LiformTestCase
 
         $resolver = new Resolver();
         $resolver->setTransformer('text', new StringTransformer($this->translator));
-        $transformer = new CompoundTransformer($this->translator, null, $resolver);
+        $transformer = new CompoundTransformer($this->translator, $resolver);
         $this->translator->method('trans')
-            ->will($this->returnCallback(function ($description) {
-                return $description;
-            }));
+            ->willReturnCallback(fn($description) => $description);
         $transformed = $transformer->transform($form);
 
-        $this->assertTrue(is_array($transformed));
         $this->assertArrayHasKey('description', $transformed['properties']['firstName']);
         $this->assertSame($description, $transformed['properties']['firstName']['description']);
     }
 
-    public function testLabel()
+    public function testLabel(): void
     {
         $form = $this->factory->create(FormType::class)
             ->add(
@@ -134,7 +124,7 @@ class CommonTransformerTest extends LiformTestCase
             ->expects($this->exactly(2))
             ->method('trans')
             ->willReturn('a label');
-        $transformer = new CompoundTransformer($this->translator, null, $resolver);
+        $transformer = new CompoundTransformer($this->translator, $resolver);
         $transformed = $transformer->transform($form);
 
         $this->assertTrue(is_array($transformed));
@@ -142,7 +132,7 @@ class CommonTransformerTest extends LiformTestCase
         $this->assertEquals('a label', $transformed['properties']['firstName']['title']);
     }
 
-    public function testWidget()
+    public function testWidget(): void
     {
         $form = $this->factory->create(FormType::class)
             ->add(
@@ -152,14 +142,14 @@ class CommonTransformerTest extends LiformTestCase
             );
         $resolver = new Resolver();
         $resolver->setTransformer('text', new StringTransformer($this->translator));
-        $transformer = new CompoundTransformer($this->translator, null, $resolver);
+        $transformer = new CompoundTransformer($this->translator, $resolver);
         $transformed = $transformer->transform($form);
 
         $this->assertTrue(is_array($transformed));
         $this->assertArrayHasKey('widget', $transformed['properties']['firstName']);
     }
 
-    public function testWidgetViaTransformerDefinition()
+    public function testWidgetViaTransformerDefinition(): void
     {
         $form = $this->factory->create(FormType::class)
             ->add(
@@ -168,7 +158,7 @@ class CommonTransformerTest extends LiformTestCase
             );
         $resolver = new Resolver();
         $resolver->setTransformer('text', new StringTransformer($this->translator), 'widg');
-        $transformer = new CompoundTransformer($this->translator, null, $resolver);
+        $transformer = new CompoundTransformer($this->translator, $resolver);
         $transformed = $transformer->transform($form);
 
         $this->assertTrue(is_array($transformed));

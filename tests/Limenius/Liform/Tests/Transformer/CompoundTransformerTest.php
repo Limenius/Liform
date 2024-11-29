@@ -26,14 +26,14 @@ use Symfony\Component\Form\Tests\AbstractFormTest;
  */
 class CompoundTransformerTest extends LiformTestCase
 {
-    public function testOrder()
+    public function testOrder(): void
     {
         $form = $this->factory->create(FormType::class)
             ->add('firstName', TextType::class)
             ->add('secondName', TextType::class);
         $resolver = new Resolver();
         $resolver->setTransformer('text', new StringTransformer($this->translator));
-        $transformer = new CompoundTransformer($this->translator, null, $resolver);
+        $transformer = new CompoundTransformer($this->translator, $resolver);
         $transformed = $transformer->transform($form);
 
         $this->assertTrue(is_array($transformed));
@@ -41,14 +41,14 @@ class CompoundTransformerTest extends LiformTestCase
         $this->assertEquals(2, $transformed['properties']['secondName']['propertyOrder']);
     }
 
-    public function testPriority()
+    public function testPriority(): void
     {
         $form = $this->factory->create(FormType::class)
             ->add('firstName', TextType::class, ['priority' => 1])
             ->add('secondName', TextType::class, ['priority' => 0]);
         $resolver = new Resolver();
         $resolver->setTransformer('text', new StringTransformer($this->translator));
-        $transformer = new CompoundTransformer($this->translator, null, $resolver);
+        $transformer = new CompoundTransformer($this->translator, $resolver);
         $transformed = $transformer->transform($form);
 
         $this->assertTrue(is_array($transformed));

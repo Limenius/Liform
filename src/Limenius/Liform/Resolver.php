@@ -30,7 +30,7 @@ class Resolver implements ResolverInterface
      * @param TransformerInterface $transformer
      * @param string|null          $widget
      */
-    public function setTransformer($formType, TransformerInterface $transformer, $widget = null)
+    public function setTransformer($formType, TransformerInterface $transformer, $widget = null): void
     {
         $this->transformers[$formType] = [
             'transformer' => $transformer,
