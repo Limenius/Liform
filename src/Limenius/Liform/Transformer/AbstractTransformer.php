@@ -28,7 +28,7 @@ abstract class AbstractTransformer implements TransformerInterface
     {
     }
 
-    public function isRequired(FormInterface $form): bool
+    public function isRequired(FormInterface $form): ?bool
     {
         return $form->getConfig()->getOption('required');
     }
