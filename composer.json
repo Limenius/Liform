@@ -1,5 +1,5 @@
 {
-  "name": "survos/liform",
+  "name": "francis-roux-serret/liform",
   "description": "Library to transform Symfony Forms into Json Schema",
   "type": "library",
   "license": "MIT",
